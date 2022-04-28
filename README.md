@@ -1,4 +1,4 @@
-# ansible-docker
+# Automated Home Media Server
 
 Ansible Playbook to setup an automated Home Media Server stack running on Docker across a variety of platforms with support for GPUs, SSL, DDNS, and more.
 
@@ -167,7 +167,7 @@ It is recommended to read and follow this guide entirely as there is a lot of co
     - The certificate will say it is invalid, but if you check the issuer, it should come from the "Staging" server, meaning it worked successfully and you then change this value to `no` to use the production server and get a valid certificate.
   - `traefik_insecure` : This is used when intially testing as a fallback to reach traefik. In production this should be set to `no` (default: `yes`)
   - `traefik_custom_rule` : If you intend to expand on this traefik instance with TCP and UDP entrypoints and routers. (default: `no`)
-  - `traefik_access_log` : To turn on access logging for your docker environment. This is helpful for security matters, more advanced options are possible with this.
+  - `traefik_access_log` : To turn on access logging for your docker environment. This is helpful for security matters, more advanced options are possible with this. (default: `no`)
 
 - Required settings for the `docker_media_share_type` of `cifs`:
 

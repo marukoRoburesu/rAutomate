@@ -94,7 +94,7 @@ Movie folder: `<media path>/Movies`
 
 TV Show folder: `<media path>/TV_Shows`
 
-Music folder: `<media path>/TV_Shows`
+Music folder: `<media path>/Music`
 
 ---
 
@@ -120,8 +120,8 @@ It is recommended to read and follow this guide entirely as there is a lot of co
 
    ```bash
    # Clone the repository and then go into the folder
-   git clone https://github.com/ahembree/ansible-docker.git
-   cd ansible-docker/
+   git clone https://github.com/marukoRoburesu/ans-HomeMediaServer.git
+   cd ans-HomeMediaServer/
    ```
 
 2. Install Ansible if not installed already:
@@ -149,31 +149,34 @@ It is recommended to read and follow this guide entirely as there is a lot of co
 - Settings to configure:
 
   - `plex_claim_token` : (optional) your Plex claim code from https://plex.tv/claim
-  - `hms_docker_domain` : the local domain name of the server to be used for proxy rules and SSL certificates (e.g. `home.local`)
+  - `docker_domain` : the local domain name of the server to be used for proxy rules and SSL certificates (e.g. `home.local`)
   - `transmission_vpn_user` : the username of the VPN user
   - `transmission_vpn_pass` : the password of the VPN user
   - `transmission_vpn_provider` : the VPN provider (e.g. `nordvpn`, [see this page for the list of supported providers](https://haugene.github.io/docker-transmission-openvpn/supported-providers/#internal_providers))
-  - `hms_docker_media_share_type` : the type of network share (`cifs`, `nfs`, `local`)
+  - `docker_media_share_type` : the type of network share (`cifs`, `nfs`, `local`)
 
 - Required settings for wildcard SSL certificate generation:
 
   - A supported DNS provider (e.g. Cloudflare), [you can find supported providers here along with their settings](https://doc.traefik.io/traefik/https/acme/#providers)
   - `traefik_ssl_enabled` : whether or not to generate a wildcard SSL certificate
-  - `traefik_ssl_dns_provider_zone` : the zone of the DNS provider (e.g. `example.com`, this will default to the `hms_docker_domain` if not modified)
+  - `traefik_ssl_dns_provider_zone` : the zone of the DNS provider (e.g. `example.com`, this will default to the `docker_domain` if not modified)
   - `traefik_ssl_dns_provider_code` : the code of the DNS provider (e.g. `cloudflare`, found at link above)
   - `traefik_ssl_dns_provider_environment_vars` : the environment variables, along with their values, of the DNS provider you're using (e.g. `"CF_DNS_API_TOKEN": "<token>"` if using `cloudflare`, found at link above)
   - `traefik_ssl_letsencrypt_email` : the email address to use for Let's Encrypt
   - `traefik_ssl_use_letsencrypt_staging_url` : whether or not to use the Let's Encrypt staging URL for initial testing (`yes` or `no`) (default: `yes`)
     - The certificate will say it is invalid, but if you check the issuer, it should come from the "Staging" server, meaning it worked successfully and you then change this value to `no` to use the production server and get a valid certificate.
+  - `traefik_insecure` : This is used when intially testing as a fallback to reach traefik. In production this should be set to `no` (default: `yes`)
+  - `traefik_custom_rule` : If you intend to expand on this traefik instance with TCP and UDP entrypoints and routers. (default: `no`)
+  - `traefik_access_log` : To turn on access logging for your docker environment. This is helpful for security matters, more advanced options are possible with this.
 
-- Required settings for the `hms_docker_media_share_type` of `cifs`:
+- Required settings for the `docker_media_share_type` of `cifs`:
 
   - `nas_client_remote_cifs_path` : the path to the network share (e.g. `//nas.example.com/share`)
   - `nas_client_cifs_username` : the username of the network share
   - `nas_client_cifs_password` : the password of the network share
   - `nas_client_cifs_opts` : the options for the network share (Google can help you find the correct options)
 
-- Required settings for the `hms_docker_media_share_type` of `nfs`:
+- Required settings for the `docker_media_share_type` of `nfs`:
 
   - `nas_client_remote_nfs_path` : the path to the network share (e.g. `nas.example.com:/share`)
   - `nas_client_nfs_opts` : the options for the network share (Google can help you find the correct options)
@@ -219,6 +222,8 @@ Plex: `https://plex.{{ domain }}`
 Sonarr: `https://sonarr.{{ domain }}`
 
 Radarr: `https://radarr.{{ domain }}`
+
+Lidarr: `https://lidarr.{{ domain }}`
 
 Bazarr: `https://bazarr.{{ domain }}`
 

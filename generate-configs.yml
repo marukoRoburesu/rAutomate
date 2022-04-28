@@ -1,0 +1,31 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    regex: '[^A-Za-z0-9._-]'
+    replace: '_'
+
+  vars_files:
+    - roles/rDocker/defaults/main.yml
+    - vars/default.yml
+
+  tasks:
+    - name: Ensure docker_data_path exists
+      file:
+        path: "{{ docker_data_path }}"
+        state: directory
+        mode: 0775
+
+    - name: Ensure Traefik config.
+      template:
+        src: roles/rDocker/templates/traefik.yml.j2
+        dest: "{{ docker_data_path }}/traefik.yml"
+        mode: 0644
+
+    - name: Ensure docker-compose.yml file.
+      template:
+        src: roles/rDocker/templates/docker-compose.yml.j2
+        dest: "{{ docker_data_path }}/docker-compose.yml"
+        group: docker
+        mode: 0775
+        backup: yes

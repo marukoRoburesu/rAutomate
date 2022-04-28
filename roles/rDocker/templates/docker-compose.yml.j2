@@ -74,7 +74,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - {{ docker_apps_path }}/traefik/config/traefik.yml:/etc/traefik/traefik.yml
       - {{ docker_apps_path }}/traefik/config/certs/:/certs/
+{% if traefik_custom_rules %}
       - {{ docker_apps_path }}/traefik/config/customRules/:/customRules/
+{% endif %}
 {% if docker_container_map['traefik']['traefik'] %}
     labels:
       - traefik.enable=true

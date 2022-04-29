@@ -60,6 +60,8 @@ docker_media_path: "{{ docker_mount_path }}/{{ docker_library_folder_name }}"
 #  Valid `type` values are:
 #   `movies`
 #   `tv_shows`
+#   `anime`
+#   `music`
 
 # The `type` value controls which containers the folders get mounted to (such as `movies` for Radarr, `tv_shows` for Sonarr)
 
@@ -114,7 +116,7 @@ container_remove_orphans: yes
 container_timezone: America/Chicago
 
 # User and Group ID's to use for the running processes in the containers (may cause or be the cause of permissions issues)
-#  default: "1234"
+# default: "1000" // this usually matches OOB first user created in unix if using non ROOT user set these to the proper user:group IDs
 container_uid: 1000
 container_gid: 1000
 
@@ -272,13 +274,7 @@ traefik_ssl_dns_resolver_2: "1.0.0.1"
 traefik_ssl_letsencrypt_email: ""
 
 # The Traefik log level, helpful for troubleshooting SSL issues // default: "INFO"
-traefik_log_level: "DEBUG"
-
-# If you intend on creating custom rules for TCP or UDP services set to yes // default: "no"
-traefik_custom_rules: no
-
-# If you want to enable more logging you can set the following to yes // default: "no"
-traefik_access_log: no
+traefik_log_level: "INFO"
 
 # Enable or disable to check if all possible Traefik routes are available (requires all FQDN DNS records to be valid) // default: "no"
 traefik_verify_endpoints: no
@@ -302,7 +298,7 @@ transmission_vpn_provider: ""
 transmission_vpn_user: ""
 transmission_vpn_pass: ""
 
-# Transmissoin seed ratio settings
+# Transmission seed ratio settings
 transmission_ratio_limit: "1" # default: "1"
 transmission_ratio_enabled: "true" # default: "true"
 
@@ -382,9 +378,13 @@ docker_container_map:
     enabled: yes
     directory: yes
     traefik: yes
+  nzbget:
+    enabled: yes
+    directory: yes
+    traefik: yes
 
 
-plex_transcode_folder: "/opt/transcode/transcode_temp" # default: "/opt/transcode/transcode_temp"
+plex_transcode_folder: "/opt/transcode" # default: "/opt/transcode"
 
 ### End of Misc rDocker settings
 #######################################################################

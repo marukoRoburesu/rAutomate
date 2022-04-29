@@ -18,6 +18,7 @@ Ansible Playbook to setup an automated Home Media Server stack running on Docker
 - Lidarr: Music automation
 - Bazarr: Subtitle management
 - Prowlarr: NZB & Torrent Tracker management
+- NZBGet: Newsnab download client
 - Transmission: Torrent download client with VPN and HTTP proxy
 - Tautulli: Plex Analytics
 - Traefik: Reverse Proxy (with SSL support from Let's Encrypt if configured)
@@ -30,11 +31,11 @@ Ansible Playbook to setup an automated Home Media Server stack running on Docker
 
 - GPU acceleration: Intel and Nvidia GPU support (if enabled) for the Plex container
   - You must install the drivers for your GPU yourself, it is not included in this playbook, but it will verify GPU acceleration is available
-- Automated Docker installation
-- Automatic container updates
-- Dynamic DNS updates
+- Automated Docker install with roles added to current user
+- Utilize Wwatchtower for automatic container update handling
+- Dynamic DNS updates with providor of choice (bearing traefik compatibility)
 - Wildcard SSL certificate generation
-- Support for multiple network shares
+- CIFS/NFS multishare compatibility
 
 ## Supported Platforms
 
@@ -52,9 +53,10 @@ Ansible Playbook to setup an automated Home Media Server stack running on Docker
 - Slight familiarity with Linux (installing packages, troubleshooting, etc)
 - `root` or `sudo` access
 - Supported Platform
-- 4 CPU Cores
-- Minimum 4GB RAM
-- Minimum 8GB free disk space
+- As far as CPU,RAM, & Storage are concerned, please use proper judgement. Take into account the `speed` of your internal or external hardware.
+  - This is capable of streaming 4K with the proper transcode folder mapped to capable hardware and an NVIDIA GPU
+  - 6GB of RAM is around normal for light usage and all services running.
+  - 4 vCPU cores or physical is probably your best bet, intel is better in this case if attempting to use QuickSync transcoding
 - Nvidia GPU drivers already installed (if using Nvidia GPU acceleration)
 - Python 3.8 (Recommended, minimum Python 3.6)
 - Ansible (minimum 2.9)
@@ -76,7 +78,7 @@ To ensure no conflicting changes with an existing system, you can run this playb
 
 ## Please note
 
-Setting up the individual container configurations, such as for Sonarr, Radarr, Overseerr, Prowlarr, etc. are outside the scope of this project. The purpose of this project is to ensure the necessary base containers are running.
+Setting up the individual container configurations, such as for Sonarr, Radarr, Overseerr, Prowlarr, etc. are outside the scope of this project. The purpose of this project is to ensure the necessary base containers are running. [Servarr Wiki](https://wiki.servarr.com/) is a great referance for all of the 'ARR' containers and configs. [Linuxserver wiki](https://docs.linuxserver.io/) is another great resource and can be used to find containers you may to add to your environment.
 
 ## Content Layout
 
@@ -94,7 +96,10 @@ Movie folder: `<media path>/Movies`
 
 TV Show folder: `<media path>/TV_Shows`
 
+Anime folder: `<media path>/Anime`
+
 Music folder: `<media path>/Music`
+
 
 ---
 
@@ -165,8 +170,9 @@ It is recommended to read and follow this guide entirely as there is a lot of co
   - `traefik_ssl_letsencrypt_email` : the email address to use for Let's Encrypt
   - `traefik_ssl_use_letsencrypt_staging_url` : whether or not to use the Let's Encrypt staging URL for initial testing (`yes` or `no`) (default: `yes`)
     - The certificate will say it is invalid, but if you check the issuer, it should come from the "Staging" server, meaning it worked successfully and you then change this value to `no` to use the production server and get a valid certificate.
+  ## The following settings are only available from the advanced config
   - `traefik_insecure` : This is used when intially testing as a fallback to reach traefik. In production this should be set to `no` (default: `yes`)
-  - `traefik_custom_rule` : If you intend to expand on this traefik instance with TCP and UDP entrypoints and routers. (default: `no`)
+  - `traefik_custom_rules` : If you intend to expand on this traefik instance with TCP and UDP entrypoints and routers. (default: `no`)
   - `traefik_access_log` : To turn on access logging for your docker environment. This is helpful for security matters, more advanced options are possible with this. (default: `no`)
 
 - Required settings for the `docker_media_share_type` of `cifs`:
@@ -185,13 +191,14 @@ It is recommended to read and follow this guide entirely as there is a lot of co
 
   - A Cloudflare account and Cloudflare configured as your domains DNS servers
   - `cloudflare_ddns_enabled` : `yes` or `no` to enable/disable Cloudflare DDNS (default: `no`)
-  - `cloudflare_api_token` : the API token of the Cloudflare account
+  - `cloudflare_api_token` : the API token of the Cloudflare account (requires r/w token for DNS zone of domain)
   - `cloudflare_zone` : the domain name of the Cloudflare zone (e.g. `example.com`)
   - `cloudflare_ddns_subdomain` : the subdomain record (e.g. `overseerr` would be created as `overseerr.example.com`) (default: `overseerr`)
   - `cloudflare_ddns_proxied` : `'true'` or `'false'` to enable/disable proxying the traffic through Cloudflare (default: `'true'`)
 
 - Optional settings to configure:
   - If you with to use a more advanced configuration, you can run this command to replace the standard config with the default advanced config:
+  - Options include more logging and traefik custom rules options.
 
   ```bash
   cp roles/hmsdocker/defaults/main.yml vars/default.yml
@@ -237,9 +244,11 @@ Tautulli: `https://tautulli.{{ domain }}`
 
 Traefik: `https://traefik.{{ domain }}`
 
+NZBGet: `https://nzbget.{{ domain }}`
+
 ## Connecting the Containers
 
-When connecting Prowlarr to Sonarr and Radarr and etc, you can use the name of the container (e.g. `prowlarr` or `radarr`) and then defining the container port to connect to (e.g. `prowlarr:9696` or `radarr:7878`).
+When connecting Prowlarr to Sonarr and Radarr and etc, you can use the name of the container (e.g. `prowlarr` or `radarr`) and then defining the container port to connect to (e.g. `prowlarr:9696` or `radarr:7878`). This is while you are in the webgui or config files that the container refrences.
 
 If you choose to expose the container ports on the host (by setting `container_expose_ports: yes` in the `vars/default.yml` file), see below for which ports are mapped to which container on the host.
 
@@ -256,7 +265,9 @@ If you choose to expose the container ports on the host (by setting `container_e
 | Portainer          | `portainer`          | `9000`                 | `9000`         | &#9745;                |
 | Bazarr             | `bazarr`             | `6767`                 | `6767`         | &#9745;                |
 | Tautulli           | `tautulli`           | `8181`                 | `8181`         | &#9745;                |
+| NZBGet             | `nzbget`             | `6789`                 | `6789`         | &#9745;                |
 | Traefik            | `traefik`            | `8080`                 | `8080`         | &#9745;                |
+
 
 
 ## Only generate config files

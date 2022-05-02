@@ -100,6 +100,14 @@ Anime folder: `<media path>/Anime`
 
 Music folder: `<media path>/Music`
 
+The default configuration for both NZBGet and Transmission is to mount their base download directories like below:
+  - Local Storage Mounting
+    - {{ docker_apps_path }}/transmission:/data/torrents
+    - {{ docker_apps_path }}/nzbget:/data/usenet
+  - Remote NAS Mounting
+    - {{ docker_mount_path }}/apps/transmission:/data/torrents
+    - {{ docker_mount_path }}/apps/nzbget:/data/usenet
+
 
 ---
 

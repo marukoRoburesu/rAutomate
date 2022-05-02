@@ -265,13 +265,16 @@ services:
       - {{ docker_apps_path }}/sonarr/config:/config
 {% if (use_nas_for_downloads is defined and use_nas_for_downloads) and (docker_media_share_type == 'nfs' or docker_media_share_type == 'cifs') %}
       - {{ docker_mount_path }}/apps/transmission:/data/torrents/
-      - {{ docker_mount_path }}/apps/nzbget:/downloads/usenet/
+      - {{ docker_mount_path }}/apps/nzbget:/data/usenet/
 {% else %}
       - {{ docker_apps_path }}transmission:/data/torrents
       - {{ docker_apps_path }}nzbget:/data/usenet/
 {% endif %}
 {% for folder in docker_library_folders %}
 {% if folder.type == "tv_shows" %}
+      - {{ docker_media_path }}/{{ folder.folder_name }}:/data/{{ folder.folder_name | map('regex_replace', regex, replace) | list | join }}
+{% endif %}
+{% if folder.type == "anime" %}
       - {{ docker_media_path }}/{{ folder.folder_name }}:/data/{{ folder.folder_name | map('regex_replace', regex, replace) | list | join }}
 {% endif %}
 {% endfor %}
@@ -320,13 +323,16 @@ services:
       - {{ docker_apps_path }}/radarr/config:/config
 {% if (use_nas_for_downloads is defined and use_nas_for_downloads) and (docker_media_share_type == 'nfs' or docker_media_share_type == 'cifs') %}
       - {{ docker_mount_path }}/apps/transmission:/data/torrents
-      - {{ docker_mount_path }}/apps/nzbget:/downloads/usenet
+      - {{ docker_mount_path }}/apps/nzbget:/data/usenet
 {% else %}
       - {{ docker_apps_path }}transmission:/data/torrents
       - {{ docker_apps_path }}nzbget:/data/usenet
 {% endif %}
 {% for folder in docker_library_folders %}
 {% if folder.type == "movies" %}
+      - {{ docker_media_path }}/{{ folder.folder_name }}:/data/{{ folder.folder_name | map('regex_replace', regex, replace) | list | join }}
+{% endif %}
+{% if folder.type == "anime" %}
       - {{ docker_media_path }}/{{ folder.folder_name }}:/data/{{ folder.folder_name | map('regex_replace', regex, replace) | list | join }}
 {% endif %}
 {% endfor %}

@@ -109,7 +109,7 @@ The default configuration for both NZBGet and Transmission is to mount their bas
     - `{{ docker_mount_path }}/apps/nzbget:/data/usenet`
 
 Below is an example file structure layout on a deployed server after full setup:
-[Imgur](https://i.imgur.com/apIdIaG.png)
+![Imgur](https://i.imgur.com/apIdIaG.png)
 
 ---
 

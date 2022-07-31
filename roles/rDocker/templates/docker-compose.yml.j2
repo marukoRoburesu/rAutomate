@@ -48,7 +48,7 @@ services:
 {% if docker_container_map['traefik']['enabled'] %}
   # Traefik container, loadbalancer/reverse proxy/ssl
   traefik:
-    image: traefik:v2.6.1
+    image: traefik:v2.8
     container_name: traefik
     restart: {{ container_restart_policy }}
     logging:
@@ -59,6 +59,9 @@ services:
       - 80:80
       - 443:443
       - 8080:8080
+      - 12437:12437
+      - 49519:49519
+    command:
     environment:
       - TZ={{ container_timezone }}
       - PUID={{ container_uid }}

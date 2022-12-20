@@ -13,6 +13,6 @@ on:
 jobs:
   lint-check:
     uses: ansible/ansible-lint-action@v6.8.2
-    path: '*.yml'
+    path: '~/*.yml'
     args: '-v'
 

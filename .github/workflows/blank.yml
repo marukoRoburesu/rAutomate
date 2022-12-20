@@ -1,0 +1,18 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+    
+jobs:
+  lint-check:
+    uses: ansible/ansible-lint-action@v6.8.2
+    path: '*.yml'
+    args: '-v'
+

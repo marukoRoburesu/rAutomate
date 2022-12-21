@@ -1,6 +1,6 @@
 ---
 - name: Ensure previous RHEL Docker packages are absent.
-  package:
+  ansible.builtin.package:
     name:
       - docker
       - docker-client
@@ -13,38 +13,38 @@
     state: absent
 
 - name: Ensure RHEL required packages.
-  package:
+  ansible.builtin.package:
     name:
       - epel-release
     state: "{{ docker_prereq_packages_state }}"
 
 - name: Ensure CentOS requirements.
-  block:
-    - name: Ensure yum-utils.
-      package:
-        name: yum-utils
-        state: "{{ docker_prereq_packages_state }}"
   when:
     - distribution_override == "centos"
+  block:
+    - name: Ensure yum-utils.
+      ansible.builtin.package:
+        name: yum-utils
+        state: "{{ docker_prereq_packages_state }}"
 
 - name: Ensure Fedora requirements.
+  when:
+    - ansible_facts['distribution'] | lower == "fedora"
   block:
     - name: Ensure previous Fedora Docker packages are absent.
-      package:
+      ansible.builtin.package:
         name:
           - docker-selinux
           - docker-engine-selinux
         state: absent
 
     - name: Ensure Fedora dnf-plugins-core.
-      package:
+      ansible.builtin.package:
         name: dnf-plugins-core
         state: "{{ docker_prereq_packages_state }}"
-  when:
-    - ansible_facts['distribution'] | lower == "fedora"
 
 - name: Ensure RHEL Docker repo.
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: docker-ce-stable
     description: "Docker CE Stable - $basearch"
     baseurl: https://download.docker.com/linux/{{ distribution_override | lower }}/$releasever/$basearch/stable

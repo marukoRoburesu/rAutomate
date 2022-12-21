@@ -1,10 +1,10 @@
 ---
 - name: Obtain public IP.
-  ipify_facts:
+  community.general.net_tools.ipify_facts:
   register: public_ip
 
 - name: Ensure paths exists locally.
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
   loop:
@@ -25,24 +25,24 @@
   no_log: yes
 
 - name: Ensure library folders.
-  file:
+  ansible.builtin.file:
     path: "{{ docker_media_path }}/{{ item.folder_name }}"
     state: directory
   with_items: "{{ docker_library_folders }}"
 
 - name: Ensure container config directories exist.
-  file:
+  ansible.builtin.file:
     path: "{{ docker_apps_path }}/{{ item.key }}/config"
     state: directory
   with_dict: "{{ docker_container_map }}"
   when: item.value.directory and (item.value.enabled is defined and item.value.enabled)
 
 - name: Ensure Traefik
-  import_tasks: "traefik.yml"
+  ansible.builtin.import_tasks: "traefik.yml"
   when: docker_container_map.traefik.enabled is defined and docker_container_map.traefik.enabled
 
 - name: Ensure docker-compose.yml file.
-  template:
+  ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ docker_data_path }}/docker-compose.yml"
     group: docker
@@ -50,7 +50,7 @@
     backup: yes
 
 - name: Ensure containers defined in compose file.
-  docker_compose:
+  community.docker.docker_compose:
     project_src: "{{ docker_data_path }}"
     project_name: "{{ project_name }}"
     pull: "{{ container_pull_images_first }}"

@@ -12,7 +12,12 @@ on:
     
 jobs:
   lint-check:
-    uses: ansible/ansible-lint-action@v6.8.2
-    with:
-      args: '-v'
-
+    name: Ansible lint check
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Ansible Lint
+      uses: ansible/ansible-lint-action@v6.8.2
+      with:
+        path: "*.yml"
+        args: "-v"

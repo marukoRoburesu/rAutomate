@@ -1,6 +1,6 @@
 ---
 - name: Ensure Traefik config.
-  template:
+  ansible.builtin.template:
     src: traefik.yml.j2
     dest: "{{ docker_apps_path }}/traefik/config/traefik.yml"
     mode: 0644
@@ -9,13 +9,13 @@
   notify: restart traefik
 
 - name: Ensure Traefik certs directory
-  file:
+  ansible.builtin.file:
     path: "{{ docker_apps_path }}/traefik/config/certs"
     state: directory
   register: traefik_certs_dir
 
 - name: Ensure Traefik customRules directory
-  file:
+  ansible.builtin.file:
     path: "{{ docker_apps_path }}/traefik/config/customRules"
     state: directory
   register: traefik_customrules_dir

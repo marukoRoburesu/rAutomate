@@ -31,5 +31,5 @@ jobs:
     - name: Ansible Lint
       uses: ansible/ansible-lint-action@v6.8.2
       with:
-        path: "./*.yml"
+        path: "./"
     

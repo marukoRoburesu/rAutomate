@@ -254,6 +254,9 @@ traefik_access_log: no
 # Allow insecure connections to Traefik
 traefik_insecure: no
 
+# Creates a custom rules directory to allow for more modular changes. // default: "no"
+traefik_custom_rules: no
+
 # Whether to use the staging/testing URL or production URL // default: "yes"
 # If SSL is enabled and this is set to yes, check to make sure the generated certificate is issued from the "STAGING" certificate authority before changing this to "no"
 traefik_ssl_use_letsencrypt_staging_url: yes

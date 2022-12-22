@@ -8,9 +8,9 @@
   when: ansible_facts["os_family"] | lower == "debian"
 
 - name: Verify nvidia-container-runtime-hook is in $PATH
-  ansible.builtin.shell: "which nvidia-container-runtime-hook"
+  ansible.builtin.command: "which nvidia-container-runtime-hook"
   register: nvidia_container_runtime_hook_path
-  changed_when: False
+  changed_when: nvidia_container_runtime_hook_path in $PATH
 
 - name: Exit if nvidia-container-runtime-hook is not in $PATH
   ansible.builtin.fail:
@@ -25,10 +25,10 @@
     - restart docker
 
 - name: Verify CUDA container works
-  ansible.builtin.shell:
+  ansible.builtin.command:
     cmd: "docker run --name nvidia-gpu-test --rm --gpus all nvidia/cuda:11.0-base nvidia-smi"
   register: nvidia_gpu_test
-  changed_when: False
+  changed_when: nvidia_gpu_test == False
 
 - name: Exit if CUDA container fails
   ansible.builtin.fail:

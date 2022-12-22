@@ -1,4 +1,4 @@
-[![Ansible Lint](https://github.com/marukoRoburesu/rAutomate/actions/workflows/blank.yml/badge.svg)](https://github.com/marukoRoburesu/rAutomate/actions/workflows/blank.yml)
+[![C/I](https://github.com/marukoRoburesu/rAutomate/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/marukoRoburesu/rAutomate/actions/workflows/CI.yml)
 # Automated Home Media Server
 
 Ansible Playbook to setup an automated Home Media Server stack running on Docker across a variety of platforms with support for GPUs, SSL, DDNS, and more.

@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: Initialize Automated Server Creation
+  hosts: all
   become: yes
   gather_facts: yes
   vars:

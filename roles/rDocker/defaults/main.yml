@@ -191,25 +191,25 @@ nas_client_use_additional_paths: no
 
 # This should be scalable to as many different shares as you want
 # This is an example template
-nas_client_remote_additional_paths:
-  [
-    {
-      name: "Media NAS 2",
-      remote_path: "nas.example.com:/volume1/media_2",
-      local_mount_path: "{{ docker_mount_path }}_custom_path_2",
-      type: nfs,
-      nfs_opts: defaults,
-    },
-    {
-      name: "Media NAS 3",
-      remote_path: "//nas.example.com/media_3",
-      local_mount_path: "{{ docker_mount_path }}_custom_path_3",
-      type: cifs,
-      cifs_username: "",
-      cifs_password: "",
-      cifs_opts: "rw,soft",
-    },
-  ]
+# nas_client_remote_additional_paths:
+#   [
+#     {
+#       name: "Media NAS 2",
+#       remote_path: "nas.example.com:/volume1/media_2",
+#       local_mount_path: "{{ docker_mount_path }}_custom_path_2",
+#       type: nfs,
+#       nfs_opts: defaults,
+#     },
+#     {
+#       name: "Media NAS 3",
+#       remote_path: "//nas.example.com/media_3",
+#       local_mount_path: "{{ docker_mount_path }}_custom_path_3",
+#       type: cifs,
+#       cifs_username: "",
+#       cifs_password: "",
+#       cifs_opts: "rw,soft",
+#     },
+#   ]
 ### End of NAS settings
 #######################################################################
 
@@ -247,6 +247,15 @@ cloudflare_ddns_create_ipv6_aaaa_record: no
 ### SSL and Traefik settings
 # Enables or Disables SSL wildcard certificate generation // default: "no"
 traefik_ssl_enabled: no
+
+# Enables or disables Traefik access logging // default: "no"
+traefik_access_log: no
+
+# Allow insecure connections to Traefik
+traefik_insecure: no
+
+# Creates a custom rules directory to allow for more modular changes. // default: "no"
+traefik_custom_rules: no
 
 # Whether to use the staging/testing URL or production URL // default: "yes"
 # If SSL is enabled and this is set to yes, check to make sure the generated certificate is issued from the "STAGING" certificate authority before changing this to "no"

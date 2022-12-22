@@ -12,7 +12,7 @@ on:
 
 jobs:
   lint:
-    name: Install Python and Ansible + Lint
+    name: Ansible Playbook lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -29,7 +29,7 @@ jobs:
           ansible-lint -v *.yml
           ansible-playbook --inventory inventory --connection local --syntax-check *.yml
   check:
-    name: Check compatibility
+    name: Check OS and Python Compatibility
     needs: lint
     strategy:
       matrix:

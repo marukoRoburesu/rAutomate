@@ -359,7 +359,7 @@ docker_container_map:
   transmission:
     enabled: yes
     directory: yes
-    traefik: yes
+    traefik: no
   portainer:
     enabled: yes
     directory: yes

@@ -22,7 +22,7 @@
     name: nvidia-docker2
     state: "{{ gpu_prereq_packages_state }}"
   notify:
-    - restart docker
+    - Restart docker
 
 - name: Verify CUDA container works
   ansible.builtin.command:

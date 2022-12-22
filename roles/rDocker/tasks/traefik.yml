@@ -6,7 +6,7 @@
     mode: 0644
     group: docker
     backup: yes
-  notify: restart traefik
+  notify: Restart traefik
 
 - name: Ensure Traefik certs directory
   ansible.builtin.file:

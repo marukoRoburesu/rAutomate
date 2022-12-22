@@ -29,16 +29,16 @@ jobs:
           ansible-lint -v *.yml
           ansible-playbook --inventory inventory --connection local --syntax-check *.yml
   check:
-    name: Check OS and Python Compatibility
+    name: Check OS/Python compatibility
     needs: lint
     strategy:
       matrix:
-        os: [ubuntu-22.04, ubuntu-20.04, ubuntu-18.04, macos-12, macos-11, macos-10.15]
+        os: [ubuntu-22.04, ubuntu-20.04, ubuntu-18.04, macos-12, macos-11]
         version: [3.8.15, 3.9.16, 3.10.9, 3.11.1]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - name: Check ${{ matrix.os }} compatibility with Python v${{ matrix.version }}
+      - name: Check ${{ matrix.os }} compatibility w/ py-v${{ matrix.version }}
         uses: actions/setup-python@v4.3.1
         with:
           python-version: ${{ matrix.version }}

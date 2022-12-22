@@ -52,4 +52,3 @@
     gpgcheck: yes
     gpgkey: https://download.docker.com/linux/{{ distribution_override | lower }}/gpg
     state: "{{ docker_repo_state }}"
-

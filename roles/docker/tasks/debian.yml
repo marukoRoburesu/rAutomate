@@ -25,6 +25,6 @@
     state: "{{ docker_repo_state }}"
 
 - name: Ensure Debian Docker stable repository.
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb https://download.docker.com/linux/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} stable
     state: "{{ docker_repo_state }}"

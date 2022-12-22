@@ -1,6 +1,6 @@
 ---
 - name: Ensure Packages
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: "{{ gpu_prereq_packages_state }}"
   loop:
@@ -17,7 +17,7 @@
     - kernel-devel
 
 - name: Ensure libnvidia Docker repo
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: libnvidia-container
     description: libnvidia-container
     file: nvidia-container-runtime
@@ -30,7 +30,7 @@
     sslcacert: /etc/pki/tls/certs/ca-bundle.crt
 
 - name: Ensure libnvidia experimental Docker repo
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: libnvidia-container-experimental
     description: libnvidia-container-experimental
     file: nvidia-container-runtime
@@ -43,7 +43,7 @@
     sslcacert: /etc/pki/tls/certs/ca-bundle.crt
 
 - name: Ensure Nvidia Container Runtime repo
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: nvidia-container-runtime
     description: nvidia-container-runtime
     file: nvidia-container-runtime
@@ -56,7 +56,7 @@
     sslcacert: /etc/pki/tls/certs/ca-bundle.crt
 
 - name: Ensure nvidia container runtime experimental repo
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: nvidia-container-runtime-experimental
     description: nvidia-container-runtime-experimental
     file: nvidia-container-runtime

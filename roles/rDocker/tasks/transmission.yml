@@ -29,3 +29,4 @@
           - "Current public IP: {{ ansible_facts['ipify_public_ip'] }}"
           - "Current VPN IP: {{ vpn_public_ip.stdout }}"
           - The Transmission container has been stopped
+  changed_when: false

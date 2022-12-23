@@ -18,8 +18,9 @@ jobs:
         python-version: 3.9
     - name: Install dependencies
       run: |
+        sudo apt-get install graphviz
         python -m pip install --upgrade pip
-        pip install pipenv graphviz docker
+        pip install pipenv graphviz docker pydot
     - name: Generate Network Diagram
       if: ${{ success() }}
       run: |

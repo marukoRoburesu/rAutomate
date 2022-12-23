@@ -29,16 +29,4 @@ jobs:
         with:
           name: Build artifact
           path: /opt/rAutomate/docker-compose.yml
-      - name: Generate Network Diagram
-        if: ${{ success() }}
-        run: |
-          git clone https://github.com/LeoVerto/docker-network-graph.git
-          cd docker-network-graph
-          pipenv install
-          pipenv run python docker-net-graph.py -o ~/output.svg
-      - name: Upload Network Diagram
-        uses: actions/upload-artifact@v3
-        with:
-          name: Generated Network Diagram Artifact
-          path: ~/output.svg
 

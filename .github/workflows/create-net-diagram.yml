@@ -1,0 +1,30 @@
+name: Network Diagram w/ GraphViz
+
+on:
+  workflow_run:
+    workflows: ["C/I"]
+    types: [requested]
+    branches: 
+      - 'master'
+      
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Python 3.9
+      uses: actions/setup-python@v4.3.1
+      with:
+        python-version: 3.9
+    - name: Generate Network Diagram
+      if: ${{ success() }}
+      run: |
+        git clone https://github.com/LeoVerto/docker-network-graph.git
+        cd docker-network-graph
+        pipenv install
+        pipenv run python docker-net-graph.py -o ~/output.svg
+    - name: Upload Network Diagram
+      uses: actions/upload-artifact@v3
+      with:
+        name: Generated Network Diagram Artifact
+        path: ~/output.svg

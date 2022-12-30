@@ -1,10 +1,9 @@
-name: Dev Quick Build
+name: 'DEV: Build on ${{ jobs.runs-on }} w/ Python v${{ jobs.steps.1.with.python-version }}'
 
 on:
   workflow_call:
 
 jobs:
-  name: Build on ${{ jobs.runs-on }} with Python v${{ jobs.steps.1.with.python-version }}
   runs-on: ubuntu-22.04
   steps:
     - uses: actions/checkout@v3

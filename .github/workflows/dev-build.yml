@@ -4,24 +4,25 @@ on:
   workflow_call:
 
 jobs:
-  runs-on: ubuntu-22.04
-  steps:
-    - uses: actions/checkout@v3
-    - name: install_python
-      uses: actions/setup-python@v4.3.1
-      with:
-        python-version: 3.11.1 # latest version
-    - name: Install ansible dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install ansible
-    - name: Run ansible-playbook local site.yml
-      run: |
-        ansible-playbook -i hosts site.yml
-    - name: Upload docker compose as artifact
-      if: ${{ failure() }}
-      uses: actions/upload-artifact@v3
-      with:
-        name: Build artifact
-        path: /opt/rAutomate/docker-compose.yml
+  dev_test_build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Python
+        uses: actions/setup-python@v4.3.1
+        with:
+          python-version: 3.11.1 # latest version
+      - name: Install Ansible dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible
+      - name: Run ansible-playbook -i hosts site.yml
+        run: |
+          ansible-playbook -i hosts site.yml
+      - name: Upload failed docker-compose.yml as artifact
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Upload artifact
+          path: /opt/rAutomate/docker-compose.yml
 

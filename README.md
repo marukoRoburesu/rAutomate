@@ -1,5 +1,6 @@
 [![C/I](https://github.com/marukoRoburesu/rAutomate/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/marukoRoburesu/rAutomate/actions/workflows/CI.yml)
 [![Network Diagram w/ GraphViz](https://github.com/marukoRoburesu/rAutomate/actions/workflows/create-net-diagram.yml/badge.svg?branch=master)](https://github.com/marukoRoburesu/rAutomate/actions/workflows/create-net-diagram.yml)
+[![Dev C/I test](https://github.com/marukoRoburesu/rAutomate/actions/workflows/CI-dev.yml/badge.svg)](https://github.com/marukoRoburesu/rAutomate/actions/workflows/CI-dev.yml)
 # Automated Home Media Server
 
 Ansible Playbook to setup an automated Home Media Server stack running on Docker across a variety of platforms with support for GPUs, SSL, DDNS, and more.

@@ -25,5 +25,5 @@ jobs:
       with:
         name: Upload artifact
         path: /opt/rAutomate/docker-compose.yml
-    name: 'DEV Build on ${{ jobs.dev_test_build.runs-on }} w/ Python v${{ jobs.dev_test_build.steps.1.with.python-version }}'
+    name: Test build on latest ubuntu, python, and ansible
 

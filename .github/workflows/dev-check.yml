@@ -19,4 +19,4 @@ jobs:
     - name: Run ansible-playbook check on site.yml
       run: |
         ansible-playbook -i hosts site.yml --check
-    name: 'Check on: ${{ jobs.dev_branch_check.runs-on }} [Python v${{ jobs.dev_branch_check.steps.1.with.python-version }}]'
+    name: Check on on latest ubuntu, python, and ansible

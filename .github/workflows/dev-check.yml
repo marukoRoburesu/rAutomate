@@ -1,4 +1,4 @@
-name: 'Check on: ${{ jobs.dev_branch_check.runs-on }} [Python v${{ jobs.steps.1.with.python-version }}]'
+name: 'Check on: ${{ jobs.dev_branch_check.runs-on }} [Python v${{ jobs.dev_branch_check.steps.1.with.python-version }}]'
 
 on:
   workflow_call:

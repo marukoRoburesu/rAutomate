@@ -1,6 +1,6 @@
 ---
 - name: Obtain public IP.
-  community.general.net_tools.ipify_facts:
+  community.general.ipify_facts:
   register: public_ip
 
 - name: Ensure paths exists locally.

@@ -1,20 +1,20 @@
 ---
 - name: Ensure platform agnostic requirements.
-  ansible.builtin.package:
+  package:
     name:
       - python3-pip
     state: "{{ docker_platform_agnostic_requirements_state }}"
 
 - name: Run RHEL-based Docker install.
-  ansible.builtin.import_tasks: redhat.yml
+  import_tasks: redhat.yml
   when: family_override | lower == "redhat"
 
 - name: Run Debian-based Docker install.
-  ansible.builtin.import_tasks: debian.yml
+  import_tasks: debian.yml
   when: ansible_facts["os_family"] | lower == "debian"
 
 - name: Ensure Docker packages.
-  ansible.builtin.package:
+  package:
     name:
       - docker-ce
       - docker-ce-cli
@@ -23,14 +23,14 @@
   when: not ansible_check_mode
 
 - name: Ensure Docker daemon config
-  ansible.builtin.template:
+  template:
     src: docker-daemon.json
     dest: /etc/docker/daemon.json
   notify: Restart docker
   when: docker_enable_live_restore
 
 - name: Ensure docker-compose.
-  ansible.builtin.get_url:
+  get_url:
     url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_machine }}
     dest: /usr/local/bin/docker-compose
     owner: root
@@ -38,7 +38,7 @@
     mode: 0755
 
 - name: Ensure docker-compose symlink.
-  ansible.builtin.file:
+  file:
     src: /usr/local/bin/docker-compose
     dest: /usr/bin/docker-compose
     owner: root
@@ -47,21 +47,21 @@
   when: not ansible_check_mode
 
 - name: Ensure pip Docker packages.
-  ansible.builtin.pip:
+  pip:
     name:
       - docker
       - docker-compose
     state: "{{ docker_pip_package_state }}"
 
 - name: Ensure Docker service.
-  ansible.builtin.service:
+  service:
     name: docker
     state: "{{ docker_service_state }}"
     enabled: "{{ docker_service_enabled }}"
   when: not ansible_check_mode
 
 - name: Ensure docker users are in the docker group.
-  ansible.builtin.user:
+  user:
     name: "{{ item }}"
     groups:
       - docker

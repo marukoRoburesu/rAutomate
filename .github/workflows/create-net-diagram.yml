@@ -21,9 +21,9 @@ jobs:
         sudo apt-get install graphviz
         python -m pip install --upgrade pip
         pip install ansible ansible-lint pipenv graphviz docker pydot
-    - name: Run Ansible-Playbook local docker.yml
+    - name: Run Ansible-Playbook local site.yml
       run: |
-        ansible-playbook -i inventory --connection local docker.yml
+        ansible-playbook -i hosts --connection local site.yml
     - name: Generate Network Diagram
       if: ${{ success() }}
       run: |

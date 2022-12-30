@@ -92,7 +92,7 @@ docker_domain: home.local
 # Also controls how some containers treat local network traffic (e.g. Plex, transmission)
 docker_subnet_mask: "24"
 docker_network_subnet: "{{ ansible_default_ipv4.network }}/{{ docker_subnet_mask }}"
-### End of rDocker settings
+### End of rAutomate settings
 #######################################################################
 
 
@@ -330,7 +330,7 @@ transmission_additional_env_vars:
 
 
 #######################################################################
-### Misc rDocker settings
+### Misc rAutomate settings
 # The "state" of all containers // default: "present" // valid: "present" // "absent"
 docker_compose_container_state: present
 
@@ -392,7 +392,7 @@ docker_container_map:
 
 plex_transcode_folder: "/opt/transcode" # default: "/opt/transcode" Best to match this to a mounted SSD filesystem for fast reads and writes.
 
-### End of Misc rDocker settings
+### End of Misc rAutomate settings
 #######################################################################
 
 

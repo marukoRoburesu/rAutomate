@@ -1,6 +1,6 @@
 ---
 - name: Ensure previous Debian Docker packages are absent.
-  ansible.builtin.package:
+  package:
     name:
       - docker
       - docker-engine
@@ -10,7 +10,7 @@
     state: absent
 
 - name: Ensure Debian Docker requirements.
-  ansible.builtin.package:
+  package:
     name:
       - apt-transport-https
       - ca-certificates
@@ -20,11 +20,11 @@
     state: "{{ docker_prereq_packages_state }}"
 
 - name: Ensure Debian Docker GPG Key.
-  ansible.builtin.apt_key:
+  apt_key:
     url: https://download.docker.com/linux/{{ ansible_facts['distribution'] | lower }}/gpg
     state: "{{ docker_repo_state }}"
 
 - name: Ensure Debian Docker stable repository.
-  ansible.builtin.apt_repository:
+  apt_repository:
     repo: deb https://download.docker.com/linux/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] }} stable
     state: "{{ docker_repo_state }}"

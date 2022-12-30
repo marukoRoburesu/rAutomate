@@ -7,7 +7,7 @@
     replace: '_'
 
   vars_files:
-    - roles/rDocker/defaults/main.yml
+    - roles/rAutomate/defaults/main.yml
     - vars/default.yml
 
   tasks:
@@ -19,13 +19,13 @@
 
     - name: Ensure Traefik config.
       ansible.builtin.template:
-        src: roles/rDocker/templates/traefik.yml.j2
+        src: roles/rAutomate/templates/traefik.yml.j2
         dest: "{{ docker_data_path }}/traefik.yml"
         mode: 0644
 
     - name: Ensure docker-compose.yml file.
       ansible.builtin.template:
-        src: roles/rDocker/templates/docker-compose.yml.j2
+        src: roles/rAutomate/templates/docker-compose.yml.j2
         dest: "{{ docker_data_path }}/docker-compose.yml"
         group: docker
         mode: 0775

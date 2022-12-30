@@ -213,7 +213,7 @@ It is recommended to read and follow this guide entirely as there is a lot of co
   - Options include more logging and traefik custom rules options.
 
   ```bash
-  cp roles/rDocker/defaults/main.yml vars/default.yml
+  cp roles/rAutomate/defaults/main.yml vars/default.yml
   ```
 
 ---
@@ -222,10 +222,10 @@ It is recommended to read and follow this guide entirely as there is a lot of co
 
 ```bash
 # If you're running against the local system (to check for any changes made, add `--check` to the end of the command):
-ansible-playbook -i inventory --connection local docker.yml
+ansible-playbook -i hosts --connection local site.yml
 
-# If you wish to run it against a remote host, add the host to the `inventory` file and then run the command:
-ansible-playbook -i inventory docker.yml
+# If you wish to run it against a remote host, add the host to the `hosts` file and then run the command:
+ansible-playbook -i hosts site.yml
 ```
 
 Once the playbook has finished running, it may take up to a few minutes for the SSL certificate to be generated (if enabled).
@@ -287,7 +287,7 @@ If you choose to expose the container ports on the host (by setting `container_e
 If you only want to generate the config files for docker-compose and Traefik, you can run the following command:
 
 ```bash
-ansible-playbook -i inventory --connection local generate-configs.yml
+ansible-playbook -i hosts --connection local generate-configs.yml
 ```
 
 By default, it will output these configs into `/opt/docker/`

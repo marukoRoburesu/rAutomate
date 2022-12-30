@@ -11,7 +11,7 @@
     - vars/default.yml
 
   roles:
-    - docker
+    - install-docker
 
   tasks:
   - name: Ensure Nvidia GPU role if enabled
@@ -19,9 +19,9 @@
       name: gpu
     when: enable_nvidia_gpu is defined and enable_nvidia_gpu
 
-  - name: Ensure rDocker role
+  - name: Ensure rAutomate role
     ansible.builtin.import_role:
-      name: rDocker
+      name: rAutomate
 
   - name: Verify all Traefik endpoints are accessible
     ansible.builtin.uri:

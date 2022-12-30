@@ -5,7 +5,7 @@ on:
 
 jobs:
   dev_test_build:
-    name: DEV Build on ${{ jobs.dev_test_build.runs-on }} w/ Python v${{ jobs.dev_test_build.steps.1.with.python-version }}
+    name: 'DEV Build on ${{ jobs.dev_test_build.runs-on }} w/ Python v${{ jobs.dev_test_build.steps.1.with.python-version }}'
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3

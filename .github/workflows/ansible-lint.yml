@@ -19,4 +19,4 @@ jobs:
     - name: Lint playbook
       run: |
         ansible-lint -v *.yml
-        ansible-playbook --hosts hosts --syntax-check *.yml
+        ansible-playbook -i hosts --syntax-check *.yml

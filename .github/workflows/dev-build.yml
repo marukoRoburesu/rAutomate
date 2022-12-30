@@ -1,10 +1,11 @@
-name: 'DEV: Build on ${{ jobs.runs-on }} w/ Python v${{ jobs.steps.1.with.python-version }}'
+name: 'Dev: Test Build'
 
 on:
   workflow_call:
 
 jobs:
   dev_test_build:
+    name: DEV Build on ${{ jobs.dev_test_build.runs-on }} w/ Python v${{ jobs.dev_test_build.steps.1.with.python-version }}
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3

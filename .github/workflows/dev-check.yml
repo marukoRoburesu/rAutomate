@@ -4,10 +4,11 @@ on:
   workflow_call:
 
 jobs:
+  name: 'Check on: ${{ jobs.runs-on }} [Python v${{ jobs.steps.1.with.python-version }}]'
   runs-on: ubuntu-22.04
   steps:
   - uses: actions/checkout@v3
-  - name: 'Check on: ${{ jobs.runs-on }} [Python v${{ jobs.steps.1.with.python-version }}]'
+  - name: Install Python
     uses: actions/setup-python@v4.3.1
     with:
       python-version: 3.11.1

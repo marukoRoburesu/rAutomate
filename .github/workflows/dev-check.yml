@@ -5,7 +5,6 @@ on:
 
 jobs:
   dev_branch_check:
-    name: 'Check on: ${{ jobs.dev_branch_check.runs-on }} [Python v${{ jobs.dev_branch_check.steps.1.with.python-version }}]'
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
@@ -20,3 +19,4 @@ jobs:
     - name: Run ansible-playbook check on site.yml
       run: |
         ansible-playbook -i hosts site.yml --check
+    name: 'Check on: ${{ jobs.dev_branch_check.runs-on }} [Python v${{ jobs.dev_branch_check.steps.1.with.python-version }}]'

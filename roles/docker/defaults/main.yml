@@ -8,5 +8,5 @@ docker_compose_version: "v2.14.2" # default: '1.29.2'
 docker_repo_state: present # default: present
 docker_enable_live_restore: no # default: no
 docker_pip_package_state: present # default: present
-distribution_override: "{{ 'centos' if ansible_distribution | lower == 'almalinux' else ansible_distribution | lower }}"
-family_override: "{{ 'redhat' if ansible_os_family | lower == 'almalinux' else ansible_os_family | lower }}"
+docker_distribution_override: "{{ 'centos' if ansible_distribution | lower == 'almalinux' else ansible_distribution | lower }}"
+docker_family_override: "{{ 'redhat' if ansible_os_family | lower == 'almalinux' else ansible_os_family | lower }}"

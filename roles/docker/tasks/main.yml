@@ -23,11 +23,12 @@
   when: not ansible_check_mode
 
 - name: Ensure Docker daemon config
-  ansible.builtin.template:
+ansible.builtin.template:
     src: docker-daemon.json
     dest: /etc/docker/daemon.json
-  notify: Restart docker
-  when: docker_enable_live_restore
+    mode: '0644'
+    notify: Restart docker
+    when: docker_enable_live_restore
 
 - name: Ensure docker-compose.
   ansible.builtin.get_url:
@@ -35,7 +36,7 @@
     dest: /usr/local/bin/docker-compose
     owner: root
     group: docker
-    mode: 0755
+mode: '0755'
 
 - name: Ensure docker-compose symlink.
   ansible.builtin.file:

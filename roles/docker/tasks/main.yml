@@ -25,7 +25,7 @@
 
 - name: Ensure Docker daemon config
   ansible.builtin.template:
-    src: docker-daemon.json
+    src: ../files/docker-daemon.json
     dest: /etc/docker/daemon.json
     mode: '0644'
     notify: Restart docker

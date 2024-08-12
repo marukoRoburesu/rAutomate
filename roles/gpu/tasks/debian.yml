@@ -7,7 +7,7 @@
 - name: Ensure nvidia-container-runtime repo
   ansible.builtin.get_url:
     url: https://nvidia.github.io/nvidia-container-runtime/{{ ansible_facts['lsb']['id'] | lower }}{{ ansible_facts['lsb']['release'] }}/nvidia-container-runtime.list
-dest: /etc/apt/sources.list.d/nvidia-container-runtime.list
+    dest: /etc/apt/sources.list.d/nvidia-container-runtime.list
     force: yes
     mode: '0644'
 
@@ -19,6 +19,6 @@ dest: /etc/apt/sources.list.d/nvidia-container-runtime.list
 - name: Ensure nvidia-docker repo
   ansible.builtin.get_url:
     url: https://nvidia.github.io/nvidia-docker/{{ ansible_facts['lsb']['id'] | lower }}{{ ansible_facts['lsb']['release'] }}/nvidia-docker.list
-dest: /etc/apt/sources.list.d/nvidia-docker.list
+    dest: /etc/apt/sources.list.d/nvidia-docker.list
     force: yes
     mode: '0644'

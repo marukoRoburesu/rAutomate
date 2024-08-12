@@ -22,7 +22,7 @@
 
 - name: Ensure additional CIFS credential files if defined
   ansible.builtin.template:
-    dest: "{{ rautomate_ docker_data_path }}/.{{ rautomate_project_name }}.{{ cifs_creds.name | map('regex_replace', regex, replace) | list | join }}.cifs_creds"
+    dest: "{{ rautomate_docker_data_path }}/.{{ rautomate_project_name }}.{{ cifs_creds.name | map('regex_replace', regex, replace) | list | join }}.cifs_creds"
     src: cifs_creds.j2
     owner: root
     group: root

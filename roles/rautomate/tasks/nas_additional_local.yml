@@ -3,6 +3,7 @@
   ansible.builtin.file:
     path: "{{ mount_path.local_mount_path }}"
     state: directory
+    mode: '0775'
   with_items:
     - "{{ rautomate_nas_client_package_state }}"
   loop_control:
@@ -16,6 +17,7 @@
   ansible.builtin.file:
     path: "{{ library_folders[0].path }}/{{  rautomate_docker_library_folder_name }}/{{ library_folders[1].folder_name }}"
     state: directory
+    mode: '0775'
   with_nested:
     - "{{ local_additional_paths.results }}"
     - "{{ rautomate_docker_library_folders }}"

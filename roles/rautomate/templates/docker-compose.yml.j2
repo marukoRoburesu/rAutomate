@@ -108,7 +108,7 @@ services:
       - TZ={{ rautomate_container_timezone }}
     volumes:
       - {{ rautomate_docker_apps_path }}/nzbget/config:/config
-{% if (use_nas_for_downloads is defined and rautomate_use_nas_for_downloads) and (rautomate_docker_media_share_type == 'nfs' or rautomate_docker_media_share_type == 'cifs') %}
+{% if (rautomate_use_nas_for_downloads is defined and rautomate_use_nas_for_downloads) and (rautomate_docker_media_share_type == 'nfs' or rautomate_docker_media_share_type == 'cifs') %}
       - {{ ruatomate_cifs_additional_creds }}/apps/nzbget/:/data/usenet
 {% else %}
       - {{ rautomate_docker_apps_path }}/nzbget/:/data/usenet
@@ -149,7 +149,7 @@ services:
       - '{{ rautomate_transmission_dns_2 }}'
     volumes:
       - {{ rautomate_docker_apps_path }}/transmission/config:/data/transmission-home
-{% if (use_nas_for_downloads is defined and rautomate_use_nas_for_downloads) and (rautomate_docker_media_share_type == 'nfs' or rautomate_docker_media_share_type == 'cifs') %}
+{% if (rautomate_use_nas_for_downloads is defined and rautomate_use_nas_for_downloads) and (rautomate_docker_media_share_type == 'nfs' or rautomate_docker_media_share_type == 'cifs') %}
       - {{ ruatomate_cifs_additional_creds }}/apps/transmission:/data/torrents
 {% else %}
       - {{ rautomate_docker_apps_path }}/transmission:/data/torrents
@@ -265,7 +265,7 @@ services:
 {% endif %}
     volumes:
       - {{ rautomate_docker_apps_path }}/sonarr/config:/config
-{% if (use_nas_for_downloads is defined and rautomate_use_nas_for_downloads) and (rautomate_docker_media_share_type == 'nfs' or rautomate_docker_media_share_type == 'cifs') %}
+{% if (rautomate_use_nas_for_downloads is defined and rautomate_use_nas_for_downloads) and (rautomate_docker_media_share_type == 'nfs' or rautomate_docker_media_share_type == 'cifs') %}
       - {{ ruatomate_cifs_additional_creds }}/apps/transmission:/data/torrents/
       - {{ ruatomate_cifs_additional_creds }}/apps/nzbget:/data/usenet/
 {% else %}
@@ -381,7 +381,7 @@ services:
 {% endif %}
     volumes:
       - {{ rautomate_docker_apps_path }}/lidarr/config:/config
-{% if (use_nas_for_downloads is defined and rautomate_use_nas_for_downloads) and (rautomate_docker_media_share_type == 'nfs' or rautomate_docker_media_share_type == 'cifs') %}
+{% if (rautomate_use_nas_for_downloads is defined and rautomate_use_nas_for_downloads) and (rautomate_docker_media_share_type == 'nfs' or rautomate_docker_media_share_type == 'cifs') %}
       - {{ ruatomate_cifs_additional_creds }}/apps/transmission:/data/torrents
       - {{ ruatomate_cifs_additional_creds }}/apps/nzbget:/data/usenet
 {% else %}

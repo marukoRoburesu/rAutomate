@@ -246,45 +246,45 @@ rautomate_cloudflare_ddns_create_ipv6_aaaa_record: no
 #######################################################################
 ### SSL and Traefik settings
 # Enables or Disables SSL wildcard certificate generation // default: "no"
-traefik_ssl_enabled: no
+rautomate_traefik_ssl_enabled: no
 
 # Whether to use the staging/testing URL or production URL // default: "yes"
 # If SSL is enabled and this is set to yes, check to make sure the generated certificate is issued from the "STAGING" certificate authority before changing this to "no"
-traefik_ssl_use_letsencrypt_staging_url: yes
+rautomate_traefik_ssl_use_letsencrypt_staging_url: yes
 
 # The DNS provider to use for SSL generation, check this for supported providers: https://doc.traefik.io/traefik/https/acme/#providers
-traefik_ssl_dns_provider_code: ""
+rautomate_traefik_ssl_dns_provider_code: ""
 
 # The DNS zone to use for SSL generation, this will use the domain defined above // default: "{{ docker_domain }}"
-traefik_ssl_dns_provider_zone: "{{ docker_domain }}"
+rautomate_traefik_ssl_dns_provider_zone: "{{ docker_domain }}"
 
 # The environment variables for your DNS provider found at the provider link above
 # This is an example if using Cloudflare
-traefik_ssl_dns_provider_environment_vars:
+rautomate_traefik_ssl_dns_provider_environment_vars:
   {
     "CF_DNS_API_TOKEN": "{{ cloudflare_api_token }}", # Example cloudflare environment variable, can use the same API token as the one for DDNS
     "CF_ZONE_API_TOKEN": "{{ cloudflare_api_token }}", # Example cloudflare environment variable, can use the same API token as the one for DDNS
   }
 
 # The DNS servers to use when generating your SSL certificate, recommended to set to your DNS providers servers
-traefik_ssl_dns_resolver_1: "1.1.1.1"
-traefik_ssl_dns_resolver_2: "1.0.0.1"
+rautomate_traefik_ssl_dns_resolver_1: "1.1.1.1"
+rautomate_traefik_ssl_dns_resolver_2: "1.0.0.1"
 
 # Required for Let's Encrypt, the email address to use when generating your SSL certificate
-traefik_ssl_letsencrypt_email: ""
+rautomate_traefik_ssl_letsencrypt_email: ""
 
 # The Traefik log level, helpful for troubleshooting SSL issues // default: "INFO"
-traefik_log_level: "INFO"
+rautomate_traefik_log_level: "INFO"
 
 # Enable or disable to check if all possible Traefik routes are available (requires all FQDN DNS records to be valid) // default: "no"
-traefik_verify_endpoints: no
+rautomate_traefik_verify_endpoints: no
 
 # The Traefik allow-list for all containers EXCEPT the Overseerr container, the Overseerr container allows ALL IP's by default
 # This allows all RFC1918 addresses by default, you can change this to further restrict or allow greater access
-traefik_subnet_allow_list: "{{ docker_network_subnet }}, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16"
+rautomate_traefik_subnet_allow_list: "{{ docker_network_subnet }}, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16"
 
 # The Traefik Pilot token (do not fill before running once with it blank on first run)
-traefik_pilot_token: ""
+rautomate_traefik_pilot_token: ""
 ### End of SSL and Traefik settings
 #######################################################################
 
@@ -294,24 +294,24 @@ traefik_pilot_token: ""
 ### VPN and Transmission settings
 # Visit https://haugene.github.io/docker-transmission-openvpn/supported-providers/ for supported VPN providers
 # The VPN provider to use and the credentials to use for the VPN connection
-transmission_vpn_provider: ""
-transmission_vpn_user: ""
-transmission_vpn_pass: ""
+rautomate_transmission_vpn_provider: ""
+rautomate_transmission_vpn_user: ""
+rautomate_transmission_vpn_pass: ""
 
 # Transmission seed ratio settings
-transmission_ratio_limit: "1" # default: "1"
-transmission_ratio_enabled: "true" # default: "true"
+rautomate_transmission_ratio_limit: "1" # default: "1"
+rautomate_transmission_ratio_enabled: "true" # default: "true"
 
 # DNS servers to use for the transmission container
-transmission_dns_1: "8.8.8.8"
-transmission_dns_2: "8.8.4.4"
+rautomate_transmission_dns_1: "8.8.8.8"
+rautomate_transmission_dns_2: "8.8.4.4"
 
 # This will cause Transmission to download the files to your NAS instead of a local folder (useful if you download a lot at once and your server doesn't have a lot of space)
 # If enabled, a new "apps" folder will be created within your library folder
-transmission_use_nas_for_downloads: no
+rautomate_transmission_use_nas_for_downloads: no
 
 # Additional environment variables for Transmission (can be found at link above)
-transmission_additional_env_vars:
+rautomate_transmission_additional_env_vars:
   {
     "TRANSMISSION_DOWNLOAD_QUEUE_SIZE": "25",
     "TRANSMISSION_MAX_PEERS_GLOBAL": "3000",
@@ -326,14 +326,14 @@ transmission_additional_env_vars:
 #######################################################################
 ### Misc rautomate settings
 # The "state" of all containers // default: "present" // valid: "present" // "absent"
-docker_compose_container_state: present
+rautomate_docker_compose_container_state: present
 
 # The container map, use this to disable specific containers from running or being accessible by Traefik
 # Values:
 #  `enabled`: Enables or disables the container
 #  `directory`: Creates the container directory within the apps folder
 #  `traefik`: Enables or disables accessing the container via Traefik
-docker_container_map:
+rautomate_docker_container_map:
   traefik:
     enabled: yes
     directory: yes
@@ -384,7 +384,7 @@ docker_container_map:
     traefik: yes
 
 
-plex_transcode_folder: "/opt/transcode" # default: "/opt/transcode"
+rautomate_plex_transcode_folder: "/opt/transcode" # default: "/opt/transcode"
 
 ### End of Misc rautomate settings
 #######################################################################
@@ -394,8 +394,8 @@ plex_transcode_folder: "/opt/transcode" # default: "/opt/transcode"
 #######################################################################
 ### Advanced Ansible settings
 # Overrides the family to 'redhat' if running Alma Linux
-family_override: "{{ 'redhat' if ansible_os_family | lower == 'almalinux' else ansible_os_family | lower }}"
+rautomate_family_override: "{{ 'redhat' if ansible_os_family | lower == 'almalinux' else ansible_os_family | lower }}"
 
 # Which python interpreter to use, only change if you're an advanced user and know what you're doing
-ansible_python_interpreter: /usr/bin/python3
+rautomate_ansible_python_interpreter: /usr/bin/python3
 #######################################################################

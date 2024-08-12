@@ -2,7 +2,7 @@
 - name: Ensure Traefik config.
   ansible.builtin.template:
     src: traefik.yml.j2
-    dest: "{{ docker_apps_path }}/traefik/config/traefik.yml"
+    dest: "{{ rautomate_docker_apps_path }}/traefik/config/traefik.yml"
     mode: "0664"
     group: docker
     backup: yes
@@ -10,12 +10,12 @@
 
 - name: Ensure Traefik certs directory
   ansible.builtin.file:
-    path: "{{ docker_apps_path }}/traefik/config/certs"
+    path: "{{ rautomate_docker_apps_path }}/traefik/config/certs"
     state: directory
   register: traefik_certs_dir
 
 - name: Ensure Traefik customRules directory
   ansible.builtin.file:
-    path: "{{ docker_apps_path }}/traefik/config/customRules"
+    path: "{{ rautomate_docker_apps_path }}/traefik/config/customRules"
     state: directory
   register: traefik_customrules_dir

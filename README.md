@@ -105,8 +105,8 @@ Music folder: `<media path>/Music`
 
 The default configuration for both NZBGet and Transmission is to mount their base download directories like below:
   - Local Storage Mounting
-    - `{{ docker_apps_path }}/transmission:/data/torrents`
-    - `{{ docker_apps_path }}/nzbget:/data/usenet`
+    - `{{ rautomate_docker_apps_path }}/transmission:/data/torrents`
+    - `{{ rautomate_docker_apps_path }}/nzbget:/data/usenet`
   - Remote NAS Mounting
     - `{{ ruatomate_cifs_additional_creds }}/apps/transmission:/data/torrents`
     - `{{ ruatomate_cifs_additional_creds }}/apps/nzbget:/data/usenet`

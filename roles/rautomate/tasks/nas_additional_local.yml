@@ -14,11 +14,11 @@
 
 - name: Ensure library folders for additional paths
   ansible.builtin.file:
-    path: "{{ library_folders[0].path }}/{{ docker_library_folder_name }}/{{ library_folders[1].folder_name }}"
+    path: "{{ library_folders[0].path }}/{{  rautomate_docker_library_folder_name }}/{{ library_folders[1].folder_name }}"
     state: directory
   with_nested:
     - "{{ local_additional_paths.results }}"
-    - "{{ docker_library_folders }}"
+    - "{{ rautomate_docker_library_folders }}"
   loop_control:
     loop_var: library_folders
   when:

@@ -51,10 +51,10 @@ rautomate_docker_media_share_type: local
 rautomate_docker_mount_path: "/opt/{{ rautomate_project_name }}/media_data"
 
 # The name of the folder that will have the library folders defined below// default: "_library"
-rautomate_docker_library_folder_name: "_library"
+rautomate_ rautomate_docker_library_folder_name: "_library"
 
-# This just combines the mount path and media folder name, recommended to leave this alone // default: "{{ ruatomate_cifs_additional_creds }}/{{ docker_library_folder_name }}"
-rautomate_docker_media_path: "{{ ruatomate_cifs_additional_creds }}/{{ docker_library_folder_name }}"
+# This just combines the mount path and media folder name, recommended to leave this alone // default: "{{ ruatomate_cifs_additional_creds }}/{{  rautomate_docker_library_folder_name }}"
+rautomate_docker_media_path: "{{ ruatomate_cifs_additional_creds }}/{{  rautomate_docker_library_folder_name }}"
 
 # The name of the library folders that will be created within the library folder that was defined above
 #  Valid `type` values are:
@@ -271,8 +271,8 @@ rautomate_traefik_ssl_dns_provider_zone: "{{ docker_domain }}"
 # This is an example if using Cloudflare
 rautomate_traefik_ssl_dns_provider_environment_vars:
   {
-    "CF_DNS_API_TOKEN": "{{ cloudflare_api_token }}", # Example cloudflare environment variable, can use the same API token as the one for DDNS
-    "CF_ZONE_API_TOKEN": "{{ cloudflare_api_token }}", # Example cloudflare environment variable, can use the same API token as the one for DDNS
+    "CF_DNS_API_TOKEN": "{{ rautomate_cloudflare_api_token }}", # Example cloudflare environment variable, can use the same API token as the one for DDNS
+    "CF_ZONE_API_TOKEN": "{{ rautomate_cloudflare_api_token }}", # Example cloudflare environment variable, can use the same API token as the one for DDNS
   }
 
 # The DNS servers to use when generating your SSL certificate, recommended to set to your DNS providers servers
@@ -287,7 +287,7 @@ rautomate_traefik_verify_endpoints: no
 
 # The Traefik allow-list for all containers EXCEPT the Overseerr container, the Overseerr container allows ALL IP's by default
 # This allows all RFC1918 addresses by default, you can change this to further restrict or allow greater access
-rautomate_traefik_subnet_allow_list: "{{ docker_network_subnet }}, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16"
+rautomate_traefik_subnet_allow_list: "{{ rautomate_docker_network_subnet }}, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16"
 
 # The Traefik Pilot token (do not fill before running once with it blank on first run)
 rautomate_traefik_pilot_token: ""

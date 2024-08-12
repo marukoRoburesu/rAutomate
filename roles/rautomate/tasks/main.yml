@@ -21,7 +21,7 @@
   with_items: "{{ rautomate_nas_client_remote_additional_paths }}"
   when:
     - rautomate_nas_client_package_state is defined
-    - nas_client_use_additional_paths is defined and nas_client_use_additional_paths
+    - rautomate_nas_client_use_additional_paths is defined and rautomate_nas_client_use_additional_paths
   no_log: yes
 
 - name: Ensure library folders.

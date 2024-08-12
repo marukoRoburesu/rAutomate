@@ -37,8 +37,8 @@ rautomate_project_name: rAutomate
 # Where container data and configs are stored // default: "/opt/{{ rautomate_project_name }}"
 rautomate_docker_data_path: "/opt/{{ rautomate_project_name }}"
 
-# Where the container data is stored // default: "{{ rautomate_ docker_data_path }}/apps"
-rautomate_docker_apps_path: "{{ rautomate_ docker_data_path }}/apps"
+# Where the container data is stored // default: "{{ rautomate_docker_data_path }}/apps"
+rautomate_docker_apps_path: "{{ rautomate_docker_data_path }}/apps"
 
 # The type of "media share" (if using a NAS) to use for reading/writing media data, such as movies and tv // default: "local"
 #    `local`: local folder path

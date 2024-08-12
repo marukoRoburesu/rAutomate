@@ -9,7 +9,7 @@
 
 - name: Ensure CIFS credentials file.
   ansible.builtin.template:
-    dest: "{{ rautomate_ docker_data_path }}/.{{ rautomate_project_name }}.cifs_creds"
+    dest: "{{ rautomate_docker_data_path }}/.{{ rautomate_project_name }}.cifs_creds"
     src: cifs_creds.j2
     owner: root
     group: root

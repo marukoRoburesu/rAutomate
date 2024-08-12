@@ -19,3 +19,6 @@ jobs:
   build:
     needs: check
     uses: ./.github/workflows/build.yml
+  create-net-diagram:
+    needs: build
+    uses: ./.github/workflows/create-net-diagram.yml

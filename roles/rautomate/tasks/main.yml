@@ -53,7 +53,7 @@
     backup: yes
 
 - name: Ensure containers defined in compose file.
-  community.docker.docker_compose_v2:
+  community.docker.docker_compose:
     project_src: "{{ rautomate_docker_data_path }}"
     rautomate_project_name: "{{ rautomate_project_name }}"
     pull: "{{ rautomate_container_pull_images_first }}"

@@ -5,7 +5,7 @@
       - cifs-utils
       - samba-client
       - samba-common
-    state: "{{{ rautomate_nas_client_mount_state }}"
+    state: "{{ rautomate_nas_client_mount_state }}"
 
 - name: Ensure CIFS credentials file.
   ansible.builtin.template:

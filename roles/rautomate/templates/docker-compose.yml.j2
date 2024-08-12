@@ -523,7 +523,7 @@ services:
       - PLEX_CLAIM={{ rautomate_plex_claim_token }}
       - ADVERTISE_IP={{ rautomate_plex_advertise_ip }}:32400
       - ALLOWED_NETWORKS={{ rautomate_docker_network_subnet }}
-{% if enable_nvidia_gpu %}
+{% if rautomate_enable_nvidia_gpu %}
       - NVIDIA_VISIBLE_DEVICES=all
     runtime: nvidia
 {% endif %}

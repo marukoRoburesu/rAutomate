@@ -51,7 +51,7 @@ rautomate_docker_media_share_type: local
 rautomate_docker_mount_path: "/opt/{{ rautomate_project_name }}/media_data"
 
 # The name of the folder that will have the library folders defined below// default: "_library"
-rautomate_ rautomate_docker_library_folder_name: "_library"
+rautomate_docker_library_folder_name: "_library"
 
 # This just combines the mount path and media folder name, recommended to leave this alone // default: "{{ ruatomate_cifs_additional_creds }}/{{  rautomate_docker_library_folder_name }}"
 rautomate_docker_media_path: "{{ ruatomate_cifs_additional_creds }}/{{  rautomate_docker_library_folder_name }}"

@@ -139,7 +139,7 @@ rautomate_container_expose_ports: no
 rautomate_nas_client_package_state: present
 
 # Controls the "mount state" of the remote share // default: "mounted" // valid: present, absent, mounted, unmounted, remounted
-rautomate_ rautomate_nas_client_mount_state: mounted
+rautomate_nas_client_mount_state: mounted
 
 # Controls if the mount will be enabled on boot // default: "yes"
 rautomate_nas_client_mount_on_boot: yes

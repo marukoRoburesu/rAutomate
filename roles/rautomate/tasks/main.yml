@@ -7,6 +7,7 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
+    mode: '0775'
   loop:
     - "{{ rautomate_docker_data_path }}"
     - "{{ rautomate_docker_apps_path }}"
@@ -28,12 +29,14 @@
   ansible.builtin.file:
     path: "{{ rautomate_docker_media_path }}/{{ item.folder_name }}"
     state: directory
+    mode: '0775'
   with_items: "{{ rautomate_docker_library_folders }}"
 
 - name: Ensure container config directories exist.
   ansible.builtin.file:
     path: "{{ rautomate_docker_apps_path }}/{{ item.key }}/config"
     state: directory
+    mode: '0775'
   with_dict: "{{ rautomate_docker_container_map }}"
   when: item.value.directory and (item.value.enabled is defined and item.value.enabled)
 

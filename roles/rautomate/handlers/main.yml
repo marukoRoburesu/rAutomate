@@ -1,4 +1,5 @@
 ---
 - name: Restart traefik
   ansible.builtin.command: docker restart traefik
-  when: traefik_certs_dir.changed
+  when: not traefik_certs_dir.changed
+  changed_when: true

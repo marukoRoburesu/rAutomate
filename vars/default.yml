@@ -7,10 +7,10 @@
 
 # Enables Nvidia GPU hardware accelleration within the Plex container // default: "no"
 # Requires the Nvidia drivers to already be installed and working
-rDocker_enable_nvidia_gpu: no
+rautomate_enable_nvidia_gpu: no
 
 # Enables Intel GPU hardware accelleration within the Plex container // default: "no"
-rDocker_enable_intel_gpu: no
+rautomate_enable_intel_gpu: no
 ### End of GPU settings
 #######################################################################
 
@@ -19,10 +19,10 @@ rDocker_enable_intel_gpu: no
 #######################################################################
 ### Plex Settings
 # Visit https://plex.tv/claim to obtain this token specific to your account
-rDocker_plex_claim_token: ""
+rautomate_plex_claim_token: ""
 
 # This will grab the default interface IPv4 address of the host // default: "{{ ansible_default_ipv4.address }}"
-rDocker_plex_advertise_ip: "{{ ansible_default_ipv4.address }}"
+rautomate_plex_advertise_ip: "{{ ansible_default_ipv4.address }}"
 ### End of Plex Settings
 #######################################################################
 
@@ -32,29 +32,29 @@ rDocker_plex_advertise_ip: "{{ ansible_default_ipv4.address }}"
 ### Docker settings
 
 # The `project_name` controls the name of the base folders created (e.g. /opt/<project_name>/ and /mnt/<project_name>/) // default: "rAutomate"
-rDocker_project_name: rAutomate
+rautomate_project_name: rAutomate
 
 # Where container data and configs are stored // default: "/opt/{{ project_name }}"
-rDocker_docker_data_path: "/opt/{{ project_name }}"
+rautomate_docker_data_path: "/opt/{{ project_name }}"
 
 # Where the container data is stored // default: "{{ docker_data_path }}/apps"
-rDocker_docker_apps_path: "{{ docker_data_path }}/apps"
+rautomate_docker_apps_path: "{{ docker_data_path }}/apps"
 
 # The type of "media share" (if using a NAS) to use for reading/writing media data, such as movies and tv // default: "local"
 #    `local`: local folder path
 #    `cifs`: CIFS or SMB share
 #    `nfs`: NFS share
-rDocker_docker_media_share_type: local
+rautomate_docker_media_share_type: local
 
 # Where the media share will be mounted locally // default: "/opt/{{ project_name }}/media_data"
 # Recommended to change this if using `cifs` or `nfs` to a local mount point, such as "/mnt/{{ project_name }}"
-rDocker_docker_mount_path: "/opt/{{ project_name }}/media_data"
+rautomate_docker_mount_path: "/opt/{{ project_name }}/media_data"
 
 # The name of the folder that will have the library folders defined below// default: "_library"
-rDocker_docker_library_folder_name: "_library"
+rautomate_docker_library_folder_name: "_library"
 
 # This just combines the mount path and media folder name, recommended to leave this alone // default: "{{ docker_mount_path }}/{{ docker_library_folder_name }}"
-rDocker_docker_media_path: "{{ docker_mount_path }}/{{ docker_library_folder_name }}"
+rautomate_docker_media_path: "{{ docker_mount_path }}/{{ docker_library_folder_name }}"
 
 # The name of the library folders that will be created within the library folder that was defined above
 #  Valid `type` values are:
@@ -66,7 +66,7 @@ rDocker_docker_media_path: "{{ docker_mount_path }}/{{ docker_library_folder_nam
 # The `type` value controls which containers the folders get mounted to (such as `movies` for Radarr, `tv_shows` for Sonarr)
 
 # The `folder_name` is the name of the folder that will be created for that `type` of library
-rDocker_docker_library_folders:
+rautomate_docker_library_folders:
   [
     {
       type: "movies",
@@ -83,16 +83,16 @@ rDocker_docker_library_folders:
   ]
 
 # The domain used for the Traefik proxy Host rules, SSL certificate (if enabled), and DDNS (if enabled) // default: "home.local"
-rDocker_docker_domain: home.local
+rautomate_docker_domain: home.local
 
 # Most home networks are a "/24" network, so this is the default // default: "24"
 # If you don't know what this means, leave the next 2 lines alone
 # If you know your specific network mask, you can change that here
 # These are used to generate Traefik allow-list rules for the proxy so only internal networks are permitted to access certain containers
 # Also controls how some containers treat local network traffic (e.g. Plex, transmission)
-rDocker_docker_subnet_mask: "24"
-rDocker_docker_network_subnet: "{{ ansible_default_ipv4.network }}/{{ docker_subnet_mask }}"
-### End of rDocker settings
+rautomate_docker_subnet_mask: "24"
+rautomate_docker_network_subnet: "{{ ansible_default_ipv4.network }}/{{ docker_subnet_mask }}"
+### End of rautomate settings
 #######################################################################
 
 
@@ -101,31 +101,31 @@ rDocker_docker_network_subnet: "{{ ansible_default_ipv4.network }}/{{ docker_sub
 ### Container settings
 
 # Controls how the containers are restarted upon server or docker restart // default: "unless-stopped" // valid: "always", "unless-stopped", "on-failure"
-rDocker_container_restart_policy: unless-stopped
+rautomate_container_restart_policy: unless-stopped
 
 # Enables the "watchtower" container to automatically download and apply container updates // default: "yes"
-rDocker_container_enable_auto_updates: yes
+rautomate_container_enable_auto_updates: yes
 
 # The cron-style schedule for the watchtower container to check for updates in UTC time // default: "0 0 1 * * *" or one day
-rDocker_container_auto_update_schedule: "0 0 1 * * *"
+rautomate_container_auto_update_schedule: "0 0 1 * * *"
 
 # Will stop and remove containers that you disable within the container map (defined below) // default: "yes"
-rDocker_container_remove_orphans: yes
+rautomate_container_remove_orphans: yes
 
 # The timezone to use for the containers // default: "America/New_York"
-rDocker_container_timezone: America/Chicago
+rautomate_container_timezone: America/Chicago
 
 # User and Group ID's to use for the running processes in the containers (may cause or be the cause of permissions issues)
 # default: "1000" // this usually matches OOB first user created in unix if using non ROOT user set these to the proper user:group IDs
-rDocker_container_uid: 1000
-rDocker_container_gid: 1000
+rautomate_container_uid: 1000
+rautomate_container_gid: 1000
 
 # This will download all of the containers before attempting to start them // default: "yes"
-rDocker_container_pull_images_first: yes
+rautomate_container_pull_images_first: yes
 
 # This will expose each containers individual ports on the host (check the README for more info on which ports map to which containers) // default: "no"
 # If you disable traefik within the container map, the playbook will automatically override this setting and expose the ports
-rDocker_container_expose_ports: no
+rautomate_container_expose_ports: no
 ### End of Container settings
 #######################################################################
 
@@ -136,36 +136,36 @@ rDocker_container_expose_ports: no
 ## Only used if the `docker_media_share_type` is not set to `local`
 ## NAS client general settings
 # Controls the "install state" of the required package // default: "present" // valid: "present", "latest", "absent"
-rDocker_nas_client_package_state: present
+rautomate_nas_client_package_state: present
 
 # Controls the "mount state" of the remote share // default: "mounted" // valid: present, absent, mounted, unmounted, remounted
-rDocker_nas_client_mount_state: mounted
+rautomate_nas_client_mount_state: mounted
 
 # Controls if the mount will be enabled on boot // default: "yes"
-rDocker_nas_client_mount_on_boot: yes
+rautomate_nas_client_mount_on_boot: yes
 
 ## NAS client CIFS settings, only if `docker_media_share_type` is set to `cifs`
 # The CIFS/SMB remote share path to connect to // default: "//nas.example.com/share"
-rDocker_nas_client_remote_cifs_path: "//nas.example.com/share"
+rautomate_nas_client_remote_cifs_path: "//nas.example.com/share"
 
 ## WARNING: these credentials will be stored in plaintext within the `docker_data_path` folder, but will be owned by `root:root` with `0600` permissions, so only those with root or sudo access can read
 # The username to use when connecting to the remote share
-rDocker_nas_client_cifs_username: ""
+rautomate_nas_client_cifs_username: ""
 # The password to use when connecting to the remote share
-rDocker_nas_client_cifs_password: ""
+rautomate_nas_client_cifs_password: ""
 
 # The CIFS options to use for the mount, Google should be able to help troubleshoot // default: "rw,soft"
 nas_client_cifs_opts: rw,soft
 
 ## NAS client NFS settings, only if `docker_media_share_type` is set to `nfs`
 # The NFS remote share path to connect to // default: "nas.example.com:/share"
-rDocker_nas_client_remote_nfs_path: "nas.example.com:/share"
+rautomate_nas_client_remote_nfs_path: "nas.example.com:/share"
 
 # The NFS options to use for the mount, Google should be able to help troubleshoot // default: "defaults"
-rDocker_nas_client_nfs_opts: defaults
+rautomate_nas_client_nfs_opts: defaults
 
 # If you have more than one remote share path to use, you can enable this setting and define them below, please be sure to read the required values for each share type (CIFS, NFS, local)
-rDocker_nas_client_use_additional_paths: no
+rautomate_nas_client_use_additional_paths: no
 
 ### Follow the example template after these required values
 # Required values for `local` folder type:
@@ -218,26 +218,26 @@ rDocker_nas_client_use_additional_paths: no
 #######################################################################
 ### Cloudflare DDNS settings
 # Your Cloudflare API token that has read/write permissions for your DNS zone [Fill this if you wish to use SSL regardless of DDNS]
-rDocker_cloudflare_api_token: ""
+rautomate_cloudflare_api_token: ""
 # Enables or disables the Cloudflare DDNS container // default: "no"
-rDocker_cloudflare_ddns_enabled: no
+rautomate_cloudflare_ddns_enabled: no
 
 # The domain that will be used for the Cloudflare DDNS container // default: "{{ docker_domain }}"
 # Automatically uses the same domain defined above
-rDocker_cloudflare_ddns_domain: "{{ docker_domain }}"
+rautomate_cloudflare_ddns_domain: "{{ docker_domain }}"
 
 # The A (or AAAA) record to be created // default: "overseerr"
 # May cause issues if not set to "overseerr" due to the Traefik Host rules
-rDocker_cloudflare_ddns_subdomain: overseerr
+rautomate_cloudflare_ddns_subdomain: overseerr
 
 # Whether to proxy the above record through Cloudflare // default: "true"
-rDocker_cloudflare_ddns_proxied: "true"
+rautomate_cloudflare_ddns_proxied: "true"
 
 # Deletes the record when the container is stopped // default: "true"
-rDocker_cloudflare_ddns_delete_record_on_stop: "true"
+rautomate_cloudflare_ddns_delete_record_on_stop: "true"
 
 # Creates an AAAA record for IPv6 // default: "no"
-rDocker_cloudflare_ddns_create_ipv6_aaaa_record: no
+rautomate_cloudflare_ddns_create_ipv6_aaaa_record: no
 ### End of Cloudflare DDNS settings
 #######################################################################
 
@@ -324,7 +324,7 @@ transmission_additional_env_vars:
 
 
 #######################################################################
-### Misc rDocker settings
+### Misc rautomate settings
 # The "state" of all containers // default: "present" // valid: "present" // "absent"
 docker_compose_container_state: present
 
@@ -386,7 +386,7 @@ docker_container_map:
 
 plex_transcode_folder: "/opt/transcode" # default: "/opt/transcode"
 
-### End of Misc rDocker settings
+### End of Misc rautomate settings
 #######################################################################
 
 

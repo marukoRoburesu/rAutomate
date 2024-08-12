@@ -17,21 +17,21 @@
   - name: Ensure Nvidia GPU role if enabled
     ansible.builtin.import_role:
       name: gpu
-    when: rDocker_enable_nvidia_gpu is defined and rDocker_enable_nvidia_gpu
+    when: rautomate_enable_nvidia_gpu is defined and rautomate_enable_nvidia_gpu
 
-  - name: Ensure rDocker role
+  - name: Ensure rautomate role
     ansible.builtin.import_role:
-      name: rDocker
+      name: rautomate
 
   - name: Verify all Traefik endpoints are accessible
     ansible.builtin.uri:
-      url: http://{{ item.key }}.{{ rDocker_docker_domain }}
+      url: http://{{ item.key }}.{{ rautomate_docker_domain }}
       status_code: 200,302,401,403
       validate_certs: no
     with_dict:
-      - "{{ rDocker_docker_container_map }}"
+      - "{{ rautomate_docker_container_map }}"
     when:
       - item.value.traefik is defined and item.value.traefik
       - item.value.enabled is defined and item.value.enabled
-      - rDocker_docker_container_map['traefik']['enabled'] is defined and rDocker_docker_container_map['traefik']['enabled']
-      - rDocker_traefik_verify_endpoints is defined and rDocker_traefik_verify_endpoints
+      - rautomate_docker_container_map['traefik']['enabled'] is defined and rautomate_docker_container_map['traefik']['enabled']
+      - rautomate_traefik_verify_endpoints is defined and rautomate_traefik_verify_endpoints

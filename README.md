@@ -214,7 +214,7 @@ It is recommended to read and follow this guide entirely as there is a lot of co
   - Options include more logging and traefik custom rules options.
 
   ```bash
-  cp roles/rDocker/defaults/main.yml vars/default.yml
+  cp roles/rautomate/defaults/main.yml vars/default.yml
   ```
 
 ---

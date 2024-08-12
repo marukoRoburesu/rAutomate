@@ -14,15 +14,15 @@ global:
   sendAnonymousUsage: false
 
 log:
-  level: "{{ traefik_log_level }}"
+  level: "{{ rautomate_traefik_log_level }}"
 
-{% if traefik_access_log %}
+{% if rautomate_traefik_access_log %}
 accessLog: {}
 {% endif %}
 
 api:
   dashboard: true
-{% if traefik_insecure %}
+{% if rautomate_traefik_insecure %}
   insecure: true
 {% else %}
   insecure: false
@@ -31,7 +31,7 @@ api:
 entryPoints:
   web:
     address: :80
-{% if traefik_ssl_enabled %}
+{% if rautomate_traefik_ssl_enabled %}
     http:
       redirections:
         entryPoint:
@@ -44,9 +44,9 @@ entryPoints:
       tls:
         certResolver: letsencrypt
         domains:
-          - main: "{{ traefik_ssl_dns_provider_zone }}"
+          - main: "{{ rautomate_traefik_ssl_dns_provider_zone }}"
             sans:
-              - "*.{{ traefik_ssl_dns_provider_zone }}"
+              - "*.{{ rautomate_traefik_ssl_dns_provider_zone }}"
 
   traefikhub-api: ":12437"
   traefikhub-tunl: ":49519"
@@ -54,23 +54,23 @@ entryPoints:
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: "{{ traefik_ssl_letsencrypt_email }}"
-{% if traefik_ssl_use_letsencrypt_staging_url %}
+      email: "{{ rautomate_traefik_ssl_letsencrypt_email }}"
+{% if rautomate_traefik_ssl_use_letsencrypt_staging_url %}
       caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
       storage: /certs/acme_staging.json
 {% else %}
       storage: /certs/acme.json
 {% endif %}
       dnsChallenge:
-        provider: "{{ traefik_ssl_dns_provider_code }}"
+        provider: "{{ rautomate_traefik_ssl_dns_provider_code }}"
         resolvers:
-          - "{{ traefik_ssl_dns_resolver_1 }}"
-          - "{{ traefik_ssl_dns_resolver_2 }}"
+          - "{{ rautomate_traefik_ssl_dns_resolver_1 }}"
+          - "{{ rautomate_traefik_ssl_dns_resolver_2 }}"
 {% endif %}
 
 providers:
   providers:
-{% if traefik_custom_rules %}
+{% if rautomate_traefik_custom_rules %}
   file:
     directory: "/customRules/"
     watch: true
@@ -79,9 +79,9 @@ providers:
     network: "{{ rautomate_project_name }}_traefik_net"
     endpoint: unix:///var/run/docker.sock
     exposedByDefault: false
-    defaultRule: {% raw %}Host(`{{if index .Labels "com.docker.compose.service" }}{{ index .Labels "com.docker.compose.service" }}{% endraw %}.{{ docker_domain }}{% raw %}{{else}}{{ trimPrefix `/` .Name }}{% endraw %}.{{ docker_domain }}{% raw %}{{end}}`){% endraw %}
+    defaultRule: {% raw %}Host(`{{if index .Labels "com.docker.compose.service" }}{{ index .Labels "com.docker.compose.service" }}{% endraw %}.{{ rautomate_docker_domain }}{% raw %}{{else}}{{ trimPrefix `/` .Name }}{% endraw %}.{{ rautomate_docker_domain }}{% raw %}{{end}}`){% endraw %}
 
-{% if traefik_pilot_token %}
+{% if rautomate_traefik_pilot_token %}
 pilot:
-  token: "{{ traefik_pilot_token }}"
+  token: "{{ rautomate_traefik_pilot_token }}"
 {% endif %}

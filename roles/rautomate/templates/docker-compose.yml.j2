@@ -109,7 +109,7 @@ services:
     volumes:
       - {{ docker_apps_path }}/nzbget/config:/config
 {% if (use_nas_for_downloads is defined and use_nas_for_downloads) and (docker_media_share_type == 'nfs' or docker_media_share_type == 'cifs') %}
-      - {{ docker_mount_path }}/apps/nzbget/:/data/usenet
+      - {{ ruatomate_cifs_additional_creds }}/apps/nzbget/:/data/usenet
 {% else %}
       - {{ docker_apps_path }}/nzbget/:/data/usenet
 {% endif %}
@@ -150,7 +150,7 @@ services:
     volumes:
       - {{ docker_apps_path }}/transmission/config:/data/transmission-home
 {% if (use_nas_for_downloads is defined and use_nas_for_downloads) and (docker_media_share_type == 'nfs' or docker_media_share_type == 'cifs') %}
-      - {{ docker_mount_path }}/apps/transmission:/data/torrents
+      - {{ ruatomate_cifs_additional_creds }}/apps/transmission:/data/torrents
 {% else %}
       - {{ docker_apps_path }}/transmission:/data/torrents
 {% endif %}
@@ -266,8 +266,8 @@ services:
     volumes:
       - {{ docker_apps_path }}/sonarr/config:/config
 {% if (use_nas_for_downloads is defined and use_nas_for_downloads) and (docker_media_share_type == 'nfs' or docker_media_share_type == 'cifs') %}
-      - {{ docker_mount_path }}/apps/transmission:/data/torrents/
-      - {{ docker_mount_path }}/apps/nzbget:/data/usenet/
+      - {{ ruatomate_cifs_additional_creds }}/apps/transmission:/data/torrents/
+      - {{ ruatomate_cifs_additional_creds }}/apps/nzbget:/data/usenet/
 {% else %}
       - {{ docker_apps_path }}transmission:/data/torrents
       - {{ docker_apps_path }}nzbget:/data/usenet/
@@ -324,8 +324,8 @@ services:
     volumes:
       - {{ docker_apps_path }}/radarr/config:/config
 {% if (use_nas_for_downloads is defined and use_nas_for_downloads) and (docker_media_share_type == 'nfs' or docker_media_share_type == 'cifs') %}
-      - {{ docker_mount_path }}/apps/transmission:/data/torrents
-      - {{ docker_mount_path }}/apps/nzbget:/data/usenet
+      - {{ ruatomate_cifs_additional_creds }}/apps/transmission:/data/torrents
+      - {{ ruatomate_cifs_additional_creds }}/apps/nzbget:/data/usenet
 {% else %}
       - {{ docker_apps_path }}transmission:/data/torrents
       - {{ docker_apps_path }}nzbget:/data/usenet
@@ -382,8 +382,8 @@ services:
     volumes:
       - {{ docker_apps_path }}/lidarr/config:/config
 {% if (use_nas_for_downloads is defined and use_nas_for_downloads) and (docker_media_share_type == 'nfs' or docker_media_share_type == 'cifs') %}
-      - {{ docker_mount_path }}/apps/transmission:/data/torrents
-      - {{ docker_mount_path }}/apps/nzbget:/data/usenet
+      - {{ ruatomate_cifs_additional_creds }}/apps/transmission:/data/torrents
+      - {{ ruatomate_cifs_additional_creds }}/apps/nzbget:/data/usenet
 {% else %}
       - {{ docker_apps_path }}/transmission:/data/torrents
       - {{ docker_apps_path }}/nzbget:/data/usenet

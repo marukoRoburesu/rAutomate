@@ -46,7 +46,7 @@
     src: docker-compose.yml.j2
     dest: "{{ rautomate_docker_data_path }}/docker-compose.yml"
     group: docker
-    mode: 0775
+    mode: "0775"
     backup: yes
 
 - name: Ensure containers defined in compose file.

@@ -83,7 +83,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.traefik-{{ rautomate_project_name }}.loadbalancer.server.port=8080
-      - "traefik.http.middlewares.internal-ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, {{ traefik_subnet_allow_list }}"
+      - "traefik.http.middlewares.internal-ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, {{ rautomate_traefik_subnet_allow_list }}"
       - "traefik.http.middlewares.external-ipwhitelist.ipwhitelist.sourcerange=0.0.0.0/0"
       - "traefik.http.routers.traefik-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
@@ -203,7 +203,7 @@ services:
       - traefik.enable=true
       # This is an "override" rule since the traefik config, by default, will use the container name, but this container is the proxy
       # for the transmission container web UI, so we have traefik point to this one instead when trying to access the transmission web UI
-      - traefik.http.routers.proxy-{{ rautomate_project_name }}.rule=Host(`transmission.{{ docker_domain }}`)
+      - traefik.http.routers.proxy-{{ rautomate_project_name }}.rule=Host(`transmission.{{ rautomate_docker_domain }}`)
       - traefik.http.services.proxy-{{ rautomate_project_name }}.loadbalancer.server.port=8080
       - "traefik.http.routers.proxy-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
@@ -535,7 +535,7 @@ services:
       - {{ rautomate_docker_media_path }}:/data/media
 {% if rautomate_nas_client_package_state is defined and rautomate_nas_client_use_additional_paths is defined and rautomate_nas_client_use_additional_paths %}
 {% for path in rautomate_nas_client_package_state %}
-      - {{ path.local_mount_path }}/{{  rautomate_docker_library_folder_name }}:/data/{{ path.name | map('regex_replace', regex, replace) | list | join }}
+      - {{ path.local_mount_path }}/{{ rautomate_docker_library_folder_name }}:/data/{{ path.name | map('regex_replace', regex, replace) | list | join }}
 {% endfor %}
 {% endif %}
 {% if rautomate_docker_container_map['plex']['traefik'] %}

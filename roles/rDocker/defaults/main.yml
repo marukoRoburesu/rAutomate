@@ -22,7 +22,7 @@ rDocker_enable_intel_gpu: no
 rDocker_plex_claim_token: ""
 
 # This will grab the default interface IPv4 address of the host // default: "{{ ansible_default_ipv4.address }}"
-plex_advertise_ip: "{{ ansible_default_ipv4.address }}"
+rDocker_plex_advertise_ip: "{{ ansible_default_ipv4.address }}"
 ### End of Plex Settings
 #######################################################################
 
@@ -32,29 +32,29 @@ plex_advertise_ip: "{{ ansible_default_ipv4.address }}"
 ### Docker settings
 
 # The `project_name` controls the name of the base folders created (e.g. /opt/<project_name>/ and /mnt/<project_name>/) // default: "rAutomate"
-project_name: rAutomate
+rDocker_project_name: rAutomate
 
 # Where container data and configs are stored // default: "/opt/{{ project_name }}"
-docker_data_path: "/opt/{{ project_name }}"
+rDocker_docker_data_path: "/opt/{{ project_name }}"
 
 # Where the container data is stored // default: "{{ docker_data_path }}/apps"
-docker_apps_path: "{{ docker_data_path }}/apps"
+rDocker_docker_apps_path: "{{ docker_data_path }}/apps"
 
 # The type of "media share" (if using a NAS) to use for reading/writing media data, such as movies and tv // default: "local"
 #    `local`: local folder path
 #    `cifs`: CIFS or SMB share
 #    `nfs`: NFS share
-docker_media_share_type: local
+rDocker_docker_media_share_type: local
 
 # Where the media share will be mounted locally // default: "/opt/{{ project_name }}/media_data"
 # Recommended to change this if using `cifs` or `nfs` to a local mount point, such as "/mnt/{{ project_name }}"
-docker_mount_path: "/opt/{{ project_name }}/media_data"
+rDocker_docker_mount_path: "/opt/{{ project_name }}/media_data"
 
 # The name of the folder that will have the library folders defined below// default: "_library"
-docker_library_folder_name: "_library"
+rDocker_docker_library_folder_name: "_library"
 
 # This just combines the mount path and media folder name, recommended to leave this alone // default: "{{ docker_mount_path }}/{{ docker_library_folder_name }}"
-docker_media_path: "{{ docker_mount_path }}/{{ docker_library_folder_name }}"
+rDocker_docker_media_path: "{{ docker_mount_path }}/{{ docker_library_folder_name }}"
 
 # The name of the library folders that will be created within the library folder that was defined above
 #  Valid `type` values are:
@@ -66,7 +66,7 @@ docker_media_path: "{{ docker_mount_path }}/{{ docker_library_folder_name }}"
 # The `type` value controls which containers the folders get mounted to (such as `movies` for Radarr, `tv_shows` for Sonarr)
 
 # The `folder_name` is the name of the folder that will be created for that `type` of library
-docker_library_folders:
+rDocker_docker_library_folders:
   [
     {
       type: "movies",
@@ -83,15 +83,15 @@ docker_library_folders:
   ]
 
 # The domain used for the Traefik proxy Host rules, SSL certificate (if enabled), and DDNS (if enabled) // default: "home.local"
-docker_domain: home.local
+rDocker_docker_domain: home.local
 
 # Most home networks are a "/24" network, so this is the default // default: "24"
 # If you don't know what this means, leave the next 2 lines alone
 # If you know your specific network mask, you can change that here
 # These are used to generate Traefik allow-list rules for the proxy so only internal networks are permitted to access certain containers
 # Also controls how some containers treat local network traffic (e.g. Plex, transmission)
-docker_subnet_mask: "24"
-docker_network_subnet: "{{ ansible_default_ipv4.network }}/{{ docker_subnet_mask }}"
+rDocker_docker_subnet_mask: "24"
+rDocker_docker_network_subnet: "{{ ansible_default_ipv4.network }}/{{ docker_subnet_mask }}"
 ### End of rDocker settings
 #######################################################################
 

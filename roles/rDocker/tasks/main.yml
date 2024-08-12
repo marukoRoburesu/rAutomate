@@ -8,17 +8,17 @@
     path: "{{ item }}"
     state: directory
   loop:
-    - "{{ docker_data_path }}"
-    - "{{ docker_apps_path }}"
-    - "{{ docker_mount_path }}"
-    - "{{ docker_media_path }}"
+    - "{{ rDocker_docker_data_path }}"
+    - "{{ rDocker_docker_apps_path }}"
+    - "{{ rDocker_docker_mount_path }}"
+    - "{{ rDocker_docker_media_path }}"
 
 - name: NAS base configuration tasks.
-  ansible.builtin.include_tasks: "nas_{{ docker_media_share_type | lower }}.yml"
+  ansible.builtin.include_tasks: "nas_{{ rDocker_docker_media_share_type | lower }}.yml"
 
 - name: Ensure additional NAS configuration
   ansible.builtin.include_tasks: "nas_additional_{{ item.type | lower }}.yml"
-  with_items: "{{ nas_client_remote_additional_paths }}"
+  with_items: "{{ rDocker_nas_client_remote_additional_paths }}"
   when:
     - nas_client_remote_additional_paths is defined
     - nas_client_use_additional_paths is defined and nas_client_use_additional_paths
@@ -26,38 +26,38 @@
 
 - name: Ensure library folders.
   ansible.builtin.file:
-    path: "{{ docker_media_path }}/{{ item.folder_name }}"
+    path: "{{ rDocker_docker_media_path }}/{{ item.folder_name }}"
     state: directory
-  with_items: "{{ docker_library_folders }}"
+  with_items: "{{ rDocker_docker_library_folders }}"
 
 - name: Ensure container config directories exist.
   ansible.builtin.file:
-    path: "{{ docker_apps_path }}/{{ item.key }}/config"
+    path: "{{ rDocker_docker_apps_path }}/{{ item.key }}/config"
     state: directory
-  with_dict: "{{ docker_container_map }}"
+  with_dict: "{{ rDocker_docker_container_map }}"
   when: item.value.directory and (item.value.enabled is defined and item.value.enabled)
 
 - name: Ensure Traefik
   ansible.builtin.import_tasks: "traefik.yml"
-  when: docker_container_map.traefik.enabled is defined and docker_container_map.traefik.enabled
+  when: rDocker_docker_container_map.traefik.enabled is defined and rDocker_docker_container_map.traefik.enabled
 
 - name: Ensure docker-compose.yml file.
   ansible.builtin.template:
     src: docker-compose.yml.j2
-    dest: "{{ docker_data_path }}/docker-compose.yml"
+    dest: "{{ rDocker_docker_data_path }}/docker-compose.yml"
     group: docker
     mode: 0775
     backup: yes
 
 - name: Ensure containers defined in compose file.
   community.docker.docker_compose:
-    project_src: "{{ docker_data_path }}"
-    project_name: "{{ project_name }}"
-    pull: "{{ container_pull_images_first }}"
-    state: "{{ docker_compose_container_state }}"
-    remove_orphans: "{{ container_remove_orphans }}"
+    project_src: "{{ rDocker_docker_data_path }}"
+    project_name: "{{ rDocker_project_name }}"
+    pull: "{{ rDocker_container_pull_images_first }}"
+    state: "{{ rDocker_docker_compose_container_state }}"
+    remove_orphans: "{{ rDocker_container_remove_orphans }}"
   when: not ansible_check_mode
 
 - name: Ensure Transmission and VPN connection
   ansible.builtin.import_tasks: "transmission.yml"
-  when: docker_container_map.transmission.enabled is defined and docker_container_map.transmission.enabled
+  when: rDocker_docker_container_map.transmission.enabled is defined and rDocker_docker_container_map.transmission.enabled

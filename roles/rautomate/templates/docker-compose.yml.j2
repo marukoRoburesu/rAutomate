@@ -494,7 +494,7 @@ services:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
     restart: {{ rautomate_container_restart_policy }}
-{% if enable_intel_gpu %}
+{% if rautomate_enable_intel_gpu %}
     devices:
       - /dev/dri:/dev/dri
 {% endif %}

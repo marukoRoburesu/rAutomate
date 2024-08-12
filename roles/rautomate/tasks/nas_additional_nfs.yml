@@ -34,7 +34,7 @@
     src: "{{ nfs_mount.mount_path.remote_path }}"
     fstype: nfs
     opts: "{{ nfs_mount.mount_path.nfs_opts }}"
-    state: "{{ nas_client_mount_state }}"
+    state: "{{ rautomate_nas_client_mount_state }}"
   with_items:
     - "{{ nfs_additional_paths.results }}"
   loop_control:

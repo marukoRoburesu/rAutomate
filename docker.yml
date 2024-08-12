@@ -25,7 +25,7 @@
 
   - name: Verify all Traefik endpoints are accessible
     ansible.builtin.uri:
-      url: http://{{ item.key }}.{{ docker_domain }}
+      url: http://{{ item.key }}.{{ rDocker_docker_domain }}
       status_code: 200,302,401,403
       validate_certs: no
     with_dict:
@@ -33,5 +33,5 @@
     when:
       - item.value.traefik is defined and item.value.traefik
       - item.value.enabled is defined and item.value.enabled
-      - docker_container_map['traefik']['enabled'] is defined and docker_container_map['traefik']['enabled']
-      - traefik_verify_endpoints is defined and traefik_verify_endpoints
+      - rDocker_docker_container_map['traefik']['enabled'] is defined and rDocker_docker_container_map['traefik']['enabled']
+      - rDocker_traefik_verify_endpoints is defined and rDocker_traefik_verify_endpoints

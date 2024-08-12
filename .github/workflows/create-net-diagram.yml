@@ -1,11 +1,7 @@
 name: Network Diagram w/ GraphViz
 
 on:
-  workflow_run:
-    workflows: ["C/I"]
-    types: [requested]
-    branches: 
-      - 'master'
+  workflow_call:
       
 jobs:
   create:

@@ -29,7 +29,7 @@
 - name: Ensure additional NFS fstab entries if defined
   ansible.posix.mount:
     backup: yes
-    boot: "{{{ rautomate_nas_client_mount_on_boot }}"
+    boot: "{{ rautomate_nas_client_mount_on_boot }}"
     path: "{{ nfs_mount.path }}"
     src: "{{ nfs_mount.mount_path.remote_path }}"
     fstype: nfs

@@ -22,7 +22,7 @@
 - name: Ensure CIFS fstab entry.
   ansible.posix.mount:
     backup: yes
-    boot: "{{{ rautomate_nas_client_mount_on_boot }}"
+    boot: "{{ rautomate_nas_client_mount_on_boot }}"
     path: "{{ ruatomate_cifs_additional_creds }}"
     src: "{{ nas_client_remote_cifs_path }}"
     fstype: cifs

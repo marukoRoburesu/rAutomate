@@ -3,7 +3,7 @@
   ansible.builtin.template:
     src: traefik.yml.j2
     dest: "{{ rautomate_docker_apps_path }}/traefik/config/traefik.yml"
-    mode: "0664"
+    mode: '0664'
     group: docker
     backup: yes
   notify: Restart traefik
@@ -12,10 +12,12 @@
   ansible.builtin.file:
     path: "{{ rautomate_docker_apps_path }}/traefik/config/certs"
     state: directory
+    mode: '0664'
   register: traefik_certs_dir
 
 - name: Ensure Traefik customRules directory
   ansible.builtin.file:
     path: "{{ rautomate_docker_apps_path }}/traefik/config/customRules"
     state: directory
+    mode: '0664'
   register: traefik_customrules_dir

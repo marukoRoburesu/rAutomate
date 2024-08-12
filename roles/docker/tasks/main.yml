@@ -1,3 +1,4 @@
+
 ---
 - name: Ensure platform agnostic requirements.
   ansible.builtin.package:
@@ -36,7 +37,7 @@
     dest: /usr/local/bin/docker-compose
     owner: root
     group: docker
-
+    mode: '0755'
 
 - name: Ensure docker-compose symlink.
   ansible.builtin.file:

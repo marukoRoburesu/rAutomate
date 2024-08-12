@@ -579,7 +579,7 @@ services:
       - {{ rautomate_docker_apps_path }}/plex/config/Library/Application Support/Plex Media Server/Logs:/plex_logs:ro
 {% endif %}
 
-{% if cloudflare_ddns_enabled %}
+{% if rautomate_cloudflare_ddns_enabled %}
   # Cloudflare DDNS container
   cloudflare-ddns:
     image: oznu/cloudflare-ddns:latest

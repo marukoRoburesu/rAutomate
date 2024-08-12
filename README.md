@@ -203,7 +203,7 @@ It is recommended to read and follow this guide entirely as there is a lot of co
 - Required settings for using Cloudflare DDNS:
 
   - A Cloudflare account and Cloudflare configured as your domains DNS servers
-  - `cloudflare_ddns_enabled` : `yes` or `no` to enable/disable Cloudflare DDNS (default: `no`)
+  - `rautomate_cloudflare_ddns_enabled` : `yes` or `no` to enable/disable Cloudflare DDNS (default: `no`)
   - `cloudflare_api_token` : the API token of the Cloudflare account (requires r/w token for DNS zone of domain)
   - `cloudflare_zone` : the domain name of the Cloudflare zone (e.g. `example.com`)
   - `cloudflare_ddns_subdomain` : the subdomain record (e.g. `overseerr` would be created as `overseerr.example.com`) (default: `overseerr`)

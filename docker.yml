@@ -17,7 +17,7 @@
   - name: Ensure Nvidia GPU role if enabled
     ansible.builtin.import_role:
       name: gpu
-    when: enable_nvidia_gpu is defined and enable_nvidia_gpu
+    when: rDocker_enable_nvidia_gpu is defined and rDocker_enable_nvidia_gpu
 
   - name: Ensure rDocker role
     ansible.builtin.import_role:
@@ -29,7 +29,7 @@
       status_code: 200,302,401,403
       validate_certs: no
     with_dict:
-      - "{{ docker_container_map }}"
+      - "{{ rDocker_docker_container_map }}"
     when:
       - item.value.traefik is defined and item.value.traefik
       - item.value.enabled is defined and item.value.enabled

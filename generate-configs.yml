@@ -13,20 +13,20 @@
   tasks:
     - name: Ensure docker_data_path exists
       ansible.builtin.file:
-        path: "{{ docker_data_path }}"
+        path: "{{ rDocker_docker_data_path }}"
         state: directory
         mode: 0775
 
     - name: Ensure Traefik config.
       ansible.builtin.template:
         src: roles/rDocker/templates/traefik.yml.j2
-        dest: "{{ docker_data_path }}/traefik.yml"
+        dest: "{{ rDocker_docker_data_path }}/traefik.yml"
         mode: 0644
 
     - name: Ensure docker-compose.yml file.
       ansible.builtin.template:
         src: roles/rDocker/templates/docker-compose.yml.j2
-        dest: "{{ docker_data_path }}/docker-compose.yml"
+        dest: "{{ rDocker_docker_data_path }}/docker-compose.yml"
         group: docker
         mode: 0775
         backup: yes

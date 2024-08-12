@@ -5,11 +5,11 @@
       - cifs-utils
       - samba-client
       - samba-common
-    state: "{{ nas_client_package_state }}"
+    state: "{{rautomate_nas_client_package_state }}"
 
 - name: Ensure CIFS credentials file.
   ansible.builtin.template:
-    dest: "{{ docker_data_path }}/.{{ project_name }}.cifs_creds"
+    dest: "{{ rautomate_ docker_data_path }}/.{{ rautomate_project_name }}.cifs_creds"
     src: cifs_creds.j2
     owner: root
     group: root
@@ -22,7 +22,7 @@
 - name: Ensure CIFS fstab entry.
   ansible.posix.mount:
     backup: yes
-    boot: "{{ nas_client_mount_on_boot }}"
+    boot: "{{rautomate_nas_client_mount_on_boot }}"
     path: "{{ docker_mount_path }}"
     src: "{{ nas_client_remote_cifs_path }}"
     fstype: cifs

@@ -11,7 +11,7 @@
     - vars/default.yml
 
   tasks:
-    - name: Ensure docker_data_path exists
+    - name: Ensure rautomate_ docker_data_path exists
       ansible.builtin.file:
         path: "{{ rautomate_docker_data_path }}"
         state: directory

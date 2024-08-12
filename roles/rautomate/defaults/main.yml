@@ -34,11 +34,11 @@ rautomate_plex_advertise_ip: "{{ ansible_default_ipv4.address }}"
 # The `project_name` controls the name of the base folders created (e.g. /opt/<project_name>/ and /mnt/<project_name>/) // default: "rAutomate"
 rautomate_project_name: rAutomate
 
-# Where container data and configs are stored // default: "/opt/{{ project_name }}"
-rautomate_docker_data_path: "/opt/{{ project_name }}"
+# Where container data and configs are stored // default: "/opt/{{ rautomate_project_name }}"
+rautomate_docker_data_path: "/opt/{{ rautomate_project_name }}"
 
-# Where the container data is stored // default: "{{ docker_data_path }}/apps"
-rautomate_docker_apps_path: "{{ docker_data_path }}/apps"
+# Where the container data is stored // default: "{{ rautomate_ docker_data_path }}/apps"
+rautomate_docker_apps_path: "{{ rautomate_ docker_data_path }}/apps"
 
 # The type of "media share" (if using a NAS) to use for reading/writing media data, such as movies and tv // default: "local"
 #    `local`: local folder path
@@ -46,9 +46,9 @@ rautomate_docker_apps_path: "{{ docker_data_path }}/apps"
 #    `nfs`: NFS share
 rautomate_docker_media_share_type: local
 
-# Where the media share will be mounted locally // default: "/opt/{{ project_name }}/media_data"
-# Recommended to change this if using `cifs` or `nfs` to a local mount point, such as "/mnt/{{ project_name }}"
-rautomate_docker_mount_path: "/opt/{{ project_name }}/media_data"
+# Where the media share will be mounted locally // default: "/opt/{{ rautomate_project_name }}/media_data"
+# Recommended to change this if using `cifs` or `nfs` to a local mount point, such as "/mnt/{{ rautomate_project_name }}"
+rautomate_docker_mount_path: "/opt/{{ rautomate_project_name }}/media_data"
 
 # The name of the folder that will have the library folders defined below// default: "_library"
 rautomate_docker_library_folder_name: "_library"
@@ -191,7 +191,7 @@ rautomate_nas_client_use_additional_paths: no
 
 # This should be scalable to as many different shares as you want
 # This is an example template
-# nas_client_remote_additional_paths:
+# rautomate_nas_client_package_state:
 #   [
 #     {
 #       name: "Media NAS 2",
@@ -300,24 +300,24 @@ rautomate_traefik_pilot_token: ""
 ### VPN and Transmission settings
 # Visit https://haugene.github.io/docker-transmission-openvpn/supported-providers/ for supported VPN providers
 # The VPN provider to use and the credentials to use for the VPN connection
-transmission_vpn_provider: ""
-transmission_vpn_user: ""
-transmission_vpn_pass: ""
+rautomate_transmission_vpn_provider: ""
+rautomate_transmission_vpn_user: ""
+rautomate_transmission_vpn_pass: ""
 
 # Transmission seed ratio settings
-transmission_ratio_limit: "1" # default: "1"
-transmission_ratio_enabled: "true" # default: "true"
+rautomate_transmission_ratio_limit: "1" # default: "1"
+rautomate_transmission_ratio_enabled: "true" # default: "true"
 
 # DNS servers to use for the transmission container
-transmission_dns_1: "8.8.8.8"
-transmission_dns_2: "8.8.4.4"
+rautomate_transmission_dns_1: "8.8.8.8"
+rautomate_transmission_dns_2: "8.8.4.4"
 
 # This will cause Transmission to download the files to your NAS instead of a local folder (useful if you download a lot at once and your server doesn't have a lot of space)
 # If enabled, a new "apps" folder will be created within your library folder
-transmission_use_nas_for_downloads: no
+rautomate_transmission_use_nas_for_downloads: no
 
 # Additional environment variables for Transmission (can be found at link above)
-transmission_additional_env_vars:
+rautomate_transmission_additional_env_vars:
   {
     "TRANSMISSION_DOWNLOAD_QUEUE_SIZE": "25",
     "TRANSMISSION_MAX_PEERS_GLOBAL": "3000",
@@ -332,14 +332,14 @@ transmission_additional_env_vars:
 #######################################################################
 ### Misc rautomate settings
 # The "state" of all containers // default: "present" // valid: "present" // "absent"
-docker_compose_container_state: present
+rautomate_docker_compose_container_state: present
 
 # The container map, use this to disable specific containers from running or being accessible by Traefik
 # Values:
 #  `enabled`: Enables or disables the container
 #  `directory`: Creates the container directory within the apps folder
 #  `traefik`: Enables or disables accessing the container via Traefik
-docker_container_map:
+rautomate_docker_container_map:
   traefik:
     enabled: yes
     directory: yes
@@ -390,7 +390,7 @@ docker_container_map:
     traefik: yes
 
 
-plex_transcode_folder: "/opt/transcode" # default: "/opt/transcode" Best to match this to a mounted SSD filesystem for fast reads and writes.
+rautomate_plex_transcode_folder: "/opt/transcode" # default: "/opt/transcode" Best to match this to a mounted SSD filesystem for fast reads and writes.
 
 ### End of Misc rautomate settings
 #######################################################################
@@ -400,7 +400,7 @@ plex_transcode_folder: "/opt/transcode" # default: "/opt/transcode" Best to matc
 #######################################################################
 ### Advanced Ansible settings
 # Overrides the family to 'redhat' if running Alma Linux
-family_override: "{{ 'redhat' if ansible_os_family | lower == 'almalinux' else ansible_os_family | lower }}"
+rautomate_family_override: "{{ 'redhat' if ansible_os_family | lower == 'almalinux' else ansible_os_family | lower }}"
 
 # Which python interpreter to use, only change if you're an advanced user and know what you're doing
 ansible_python_interpreter: /usr/bin/python3

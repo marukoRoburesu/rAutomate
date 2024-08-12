@@ -76,7 +76,7 @@ providers:
     watch: true
 {% endif %}  
   docker:
-    network: "{{ project_name }}_traefik_net"
+    network: "{{ rautomate_project_name }}_traefik_net"
     endpoint: unix:///var/run/docker.sock
     exposedByDefault: false
     defaultRule: {% raw %}Host(`{{if index .Labels "com.docker.compose.service" }}{{ index .Labels "com.docker.compose.service" }}{% endraw %}.{{ docker_domain }}{% raw %}{{else}}{{ trimPrefix `/` .Name }}{% endraw %}.{{ docker_domain }}{% raw %}{{end}}`){% endraw %}

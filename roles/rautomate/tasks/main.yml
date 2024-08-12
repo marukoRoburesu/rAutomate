@@ -20,7 +20,7 @@
   ansible.builtin.include_tasks: "nas_additional_{{ item.type | lower }}.yml"
   with_items: "{{ rautomate_nas_client_remote_additional_paths }}"
   when:
-    - nas_client_remote_additional_paths is defined
+    - rautomate_nas_client_package_state is defined
     - nas_client_use_additional_paths is defined and nas_client_use_additional_paths
   no_log: yes
 
@@ -52,7 +52,7 @@
 - name: Ensure containers defined in compose file.
   community.docker.docker_compose:
     project_src: "{{ rautomate_docker_data_path }}"
-    project_name: "{{ rautomate_project_name }}"
+    rautomate_project_name: "{{ rautomate_project_name }}"
     pull: "{{ rautomate_container_pull_images_first }}"
     state: "{{ rautomate_docker_compose_container_state }}"
     remove_orphans: "{{ rautomate_container_remove_orphans }}"

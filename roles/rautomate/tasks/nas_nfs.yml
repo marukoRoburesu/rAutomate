@@ -3,20 +3,20 @@
   ansible.builtin.package:
     name:
       - nfs-utils
-    state: "{{ nas_client_package_state }}"
+    state: "{{rautomate_nas_client_package_state }}"
   when: family_override | lower == "redhat"
 
 - name: Ensure Debian NFS packages.
   ansible.builtin.package:
     name:
       - nfs-common
-    state: "{{ nas_client_package_state }}"
+    state: "{{rautomate_nas_client_package_state }}"
   when: ansible_facts['os_family'] | lower == "debian"
 
 - name: Ensure NFS fstab entry and mount.
   ansible.posix.mount:
     backup: yes
-    boot: "{{ nas_client_mount_on_boot }}"
+    boot: "{{rautomate_nas_client_mount_on_boot }}"
     path: "{{ docker_mount_path }}"
     src: "{{ nas_client_remote_nfs_path }}"
     fstype: nfs

@@ -4,11 +4,11 @@
     path: "{{ mount_path.local_mount_path }}"
     state: directory
   with_items:
-    - "{{ nas_client_remote_additional_paths }}"
+    - "{{ rautomate_nas_client_package_state }}"
   loop_control:
     loop_var: mount_path
   when:
-    - nas_client_remote_additional_paths is defined
+    - rautomate_nas_client_package_state is defined
     - mount_path.type == "local"
   register: local_additional_paths
 

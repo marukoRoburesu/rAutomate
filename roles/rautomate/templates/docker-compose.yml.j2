@@ -23,8 +23,8 @@ services:
 {% if docker_container_map['portainer']['traefik'] %}
     labels:
       - traefik.enable=true
-      - traefik.http.services.portainer-{{ project_name }}.loadbalancer.server.port=9000
-      - "traefik.http.routers.portainer-{{ project_name }}.middlewares=internal-ipwhitelist"
+      - traefik.http.services.portainer-{{ rautomate_project_name }}.loadbalancer.server.port=9000
+      - "traefik.http.routers.portainer-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
 {% endif %}
 
@@ -82,10 +82,10 @@ services:
 {% if docker_container_map['traefik']['traefik'] %}
     labels:
       - traefik.enable=true
-      - traefik.http.services.traefik-{{ project_name }}.loadbalancer.server.port=8080
+      - traefik.http.services.traefik-{{ rautomate_project_name }}.loadbalancer.server.port=8080
       - "traefik.http.middlewares.internal-ipwhitelist.ipwhitelist.sourcerange=127.0.0.1/32, {{ traefik_subnet_allow_list }}"
       - "traefik.http.middlewares.external-ipwhitelist.ipwhitelist.sourcerange=0.0.0.0/0"
-      - "traefik.http.routers.traefik-{{ project_name }}.middlewares=internal-ipwhitelist"
+      - "traefik.http.routers.traefik-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
 {% endif %}
 
@@ -120,8 +120,8 @@ services:
 {% if docker_container_map['nzbget']['traefik'] %}
     labels:
       - traefik.enable=true
-      - traefik.http.services.nzbget-{{ project_name }}.loadbalancer.server.port=6789
-      - "traefik.http.routers.nzbget-{{ project_name }}.middlewares=internal-ipwhitelist"
+      - traefik.http.services.nzbget-{{ rautomate_project_name }}.loadbalancer.server.port=6789
+      - "traefik.http.routers.nzbget-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
 {% endif %}
 
@@ -203,9 +203,9 @@ services:
       - traefik.enable=true
       # This is an "override" rule since the traefik config, by default, will use the container name, but this container is the proxy
       # for the transmission container web UI, so we have traefik point to this one instead when trying to access the transmission web UI
-      - traefik.http.routers.proxy-{{ project_name }}.rule=Host(`transmission.{{ docker_domain }}`)
-      - traefik.http.services.proxy-{{ project_name }}.loadbalancer.server.port=8080
-      - "traefik.http.routers.proxy-{{ project_name }}.middlewares=internal-ipwhitelist"
+      - traefik.http.routers.proxy-{{ rautomate_project_name }}.rule=Host(`transmission.{{ docker_domain }}`)
+      - traefik.http.services.proxy-{{ rautomate_project_name }}.loadbalancer.server.port=8080
+      - "traefik.http.routers.proxy-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
 {% endif %}
 
@@ -235,8 +235,8 @@ services:
 {% if docker_container_map['prowlarr']['traefik'] %}
     labels:
       - traefik.enable=true
-      - traefik.http.services.prowlarr-{{ project_name }}.loadbalancer.server.port=9696
-      - "traefik.http.routers.prowlarr-{{ project_name }}.middlewares=internal-ipwhitelist"
+      - traefik.http.services.prowlarr-{{ rautomate_project_name }}.loadbalancer.server.port=9696
+      - "traefik.http.routers.prowlarr-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
 {% endif %}
 
@@ -260,8 +260,8 @@ services:
 {% if docker_container_map['sonarr']['traefik'] %}
     labels:
       - traefik.enable=true
-      - traefik.http.services.sonarr-{{ project_name }}.loadbalancer.server.port=8989
-      - "traefik.http.routers.sonarr-{{ project_name }}.middlewares=internal-ipwhitelist"
+      - traefik.http.services.sonarr-{{ rautomate_project_name }}.loadbalancer.server.port=8989
+      - "traefik.http.routers.sonarr-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
     volumes:
       - {{ docker_apps_path }}/sonarr/config:/config
@@ -280,8 +280,8 @@ services:
       - {{ docker_media_path }}/{{ folder.folder_name }}:/data/{{ folder.folder_name | map('regex_replace', regex, replace) | list | join }}
 {% endif %}
 {% endfor %}
-{% if nas_client_remote_additional_paths is defined and nas_client_use_additional_paths is defined and nas_client_use_additional_paths %}
-{% for path in nas_client_remote_additional_paths %}
+{% if rautomate_nas_client_package_state is defined and nas_client_use_additional_paths is defined and nas_client_use_additional_paths %}
+{% for path in rautomate_nas_client_package_state %}
 {% for folder in docker_library_folders %}
 {% if folder.type == "tv_shows" %}
       - {{ path.local_mount_path }}/{{ docker_library_folder_name }}/{{ folder.folder_name }}:/data/{{ path.name | map('regex_replace', regex, replace) | list | join }}/{{ folder.folder_name }}
@@ -318,8 +318,8 @@ services:
 {% if docker_container_map['radarr']['traefik'] %}
     labels:
       - traefik.enable=true
-      - traefik.http.services.radarr-{{ project_name }}.loadbalancer.server.port=7878
-      - "traefik.http.routers.radarr-{{ project_name }}.middlewares=internal-ipwhitelist"
+      - traefik.http.services.radarr-{{ rautomate_project_name }}.loadbalancer.server.port=7878
+      - "traefik.http.routers.radarr-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
     volumes:
       - {{ docker_apps_path }}/radarr/config:/config
@@ -338,8 +338,8 @@ services:
       - {{ docker_media_path }}/{{ folder.folder_name }}:/data/{{ folder.folder_name | map('regex_replace', regex, replace) | list | join }}
 {% endif %}
 {% endfor %}
-{% if nas_client_remote_additional_paths is defined and nas_client_use_additional_paths is defined and nas_client_use_additional_paths %}
-{% for path in nas_client_remote_additional_paths %}
+{% if rautomate_nas_client_package_state is defined and nas_client_use_additional_paths is defined and nas_client_use_additional_paths %}
+{% for path in rautomate_nas_client_package_state %}
 {% for folder in docker_library_folders %}
 {% if folder.type == "movies" %}
       - {{ path.local_mount_path }}/{{ docker_library_folder_name }}/{{ folder.folder_name }}:/data/{{ path.name | map('regex_replace', regex, replace) | list | join }}/{{ folder.folder_name }}
@@ -376,8 +376,8 @@ services:
 {% if docker_container_map['lidarr']['traefik'] %}
     labels:
       - traefik.enable=true
-      - traefik.http.services.lidarr-{{ project_name }}.loadbalancer.server.port=8686
-      - "traefik.http.routers.lidarr-{{ project_name }}.middlewares=internal-ipwhitelist"
+      - traefik.http.services.lidarr-{{ rautomate_project_name }}.loadbalancer.server.port=8686
+      - "traefik.http.routers.lidarr-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
     volumes:
       - {{ docker_apps_path }}/lidarr/config:/config
@@ -393,8 +393,8 @@ services:
       - {{ docker_media_path }}/{{ folder.folder_name }}:/data/{{ folder.folder_name | map('regex_replace', regex, replace) | list | join }}
 {% endif %}
 {% endfor %}
-{% if nas_client_remote_additional_paths is defined and nas_client_use_additional_paths is defined and nas_client_use_additional_paths %}
-{% for path in nas_client_remote_additional_paths %}
+{% if rautomate_nas_client_package_state is defined and nas_client_use_additional_paths is defined and nas_client_use_additional_paths %}
+{% for path in rautomate_nas_client_package_state %}
 {% for folder in docker_library_folders %}
 {% if folder.type == "music" %}
       - {{ path.local_mount_path }}/{{ docker_library_folder_name }}/{{ folder.folder_name }}:/data/{{ path.name | map('regex_replace', regex, replace) | list | join }}/{{ folder.folder_name }}
@@ -441,8 +441,8 @@ services:
       - {{ docker_media_path }}/{{ folder.folder_name }}:/data/{{ folder.folder_name | map('regex_replace', regex, replace) | list | join }}
 {% endif %}
 {% endfor %}
-{% if nas_client_remote_additional_paths is defined and nas_client_use_additional_paths is defined and nas_client_use_additional_paths %}
-{% for path in nas_client_remote_additional_paths %}
+{% if rautomate_nas_client_package_state is defined and nas_client_use_additional_paths is defined and nas_client_use_additional_paths %}
+{% for path in rautomate_nas_client_package_state %}
 {% for folder in docker_library_folders %}
       - {{ path.local_mount_path }}/{{ docker_library_folder_name }}/{{ folder.folder_name }}:/data/{{ path.name | map('regex_replace', regex, replace) | list | join }}/{{ folder.folder_name }}
 {% endfor %}
@@ -451,8 +451,8 @@ services:
 {% if docker_container_map['bazarr']['traefik'] %}
     labels:
       - traefik.enable=true
-      - traefik.http.services.bazarr-{{ project_name }}.loadbalancer.server.port=6767
-      - "traefik.http.routers.bazarr-{{ project_name }}.middlewares=internal-ipwhitelist"
+      - traefik.http.services.bazarr-{{ rautomate_project_name }}.loadbalancer.server.port=6767
+      - "traefik.http.routers.bazarr-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
 {% endif %}
 
@@ -477,8 +477,8 @@ services:
 {% if docker_container_map['overseerr']['traefik'] %}
     labels:
       - traefik.enable=true
-      - traefik.http.services.overseerr-{{ project_name }}.loadbalancer.server.port=5055
-      - "traefik.http.routers.overseerr-{{ project_name }}.middlewares=external-ipwhitelist"
+      - traefik.http.services.overseerr-{{ rautomate_project_name }}.loadbalancer.server.port=5055
+      - "traefik.http.routers.overseerr-{{ rautomate_project_name }}.middlewares=external-ipwhitelist"
 {% endif %}
     volumes:
       - {{ docker_apps_path }}/overseerr/config:/config
@@ -533,16 +533,16 @@ services:
       - {{ plex_transcode_folder }}:/transcode
       # media folder where all movies and series are stored
       - {{ docker_media_path }}:/data/media
-{% if nas_client_remote_additional_paths is defined and nas_client_use_additional_paths is defined and nas_client_use_additional_paths %}
-{% for path in nas_client_remote_additional_paths %}
+{% if rautomate_nas_client_package_state is defined and nas_client_use_additional_paths is defined and nas_client_use_additional_paths %}
+{% for path in rautomate_nas_client_package_state %}
       - {{ path.local_mount_path }}/{{ docker_library_folder_name }}:/data/{{ path.name | map('regex_replace', regex, replace) | list | join }}
 {% endfor %}
 {% endif %}
 {% if docker_container_map['plex']['traefik'] %}
     labels:
       - traefik.enable=true
-      - traefik.http.services.plex-{{ project_name }}.loadbalancer.server.port=32400
-      - "traefik.http.routers.plex-{{ project_name }}.middlewares=internal-ipwhitelist"
+      - traefik.http.services.plex-{{ rautomate_project_name }}.loadbalancer.server.port=32400
+      - "traefik.http.routers.plex-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
 {% endif %}
 
@@ -566,8 +566,8 @@ services:
 {% if docker_container_map['tautulli']['traefik'] %}
     labels:
       - traefik.enable=true
-      - traefik.http.services.tautulli-{{ project_name }}.loadbalancer.server.port=8181
-      - "traefik.http.routers.tautulli-{{ project_name }}.middlewares=internal-ipwhitelist"
+      - traefik.http.services.tautulli-{{ rautomate_project_name }}.loadbalancer.server.port=8181
+      - "traefik.http.routers.tautulli-{{ rautomate_project_name }}.middlewares=internal-ipwhitelist"
 {% endif %}
 {% if container_expose_ports or not docker_container_map['traefik']['enabled'] %}
     ports:

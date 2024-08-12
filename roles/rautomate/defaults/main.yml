@@ -53,8 +53,8 @@ rautomate_docker_mount_path: "/opt/{{ rautomate_project_name }}/media_data"
 # The name of the folder that will have the library folders defined below// default: "_library"
 rautomate_docker_library_folder_name: "_library"
 
-# This just combines the mount path and media folder name, recommended to leave this alone // default: "{{ docker_mount_path }}/{{ docker_library_folder_name }}"
-rautomate_docker_media_path: "{{ docker_mount_path }}/{{ docker_library_folder_name }}"
+# This just combines the mount path and media folder name, recommended to leave this alone // default: "{{ ruatomate_cifs_additional_creds }}/{{ docker_library_folder_name }}"
+rautomate_docker_media_path: "{{ ruatomate_cifs_additional_creds }}/{{ docker_library_folder_name }}"
 
 # The name of the library folders that will be created within the library folder that was defined above
 #  Valid `type` values are:
@@ -139,7 +139,7 @@ rautomate_container_expose_ports: no
 rautomate_nas_client_package_state: present
 
 # Controls the "mount state" of the remote share // default: "mounted" // valid: present, absent, mounted, unmounted, remounted
-rautomate_nas_client_mount_state: mounted
+rautomate_ rautomate_nas_client_mount_state: mounted
 
 # Controls if the mount will be enabled on boot // default: "yes"
 rautomate_nas_client_mount_on_boot: yes
@@ -159,10 +159,10 @@ rautomate_nas_client_cifs_opts: rw,soft
 
 ## NAS client NFS settings, only if `docker_media_share_type` is set to `nfs`
 # The NFS remote share path to connect to // default: "nas.example.com:/share"
-rautomate_nas_client_remote_nfs_path: "nas.example.com:/share"
+rautomate_rautomate_nas_client_remote_nfs_path: "nas.example.com:/share"
 
 # The NFS options to use for the mount, Google should be able to help troubleshoot // default: "defaults"
-rautomate_nas_client_nfs_opts: defaults
+rautomate_rautomate_nas_client_nfs_opts: defaults
 
 # If you have more than one remote share path to use, you can enable this setting and define them below, please be sure to read the required values for each share type (CIFS, NFS, local)
 rautomate_nas_client_use_additional_paths: no
@@ -196,14 +196,14 @@ rautomate_nas_client_use_additional_paths: no
 #     {
 #       name: "Media NAS 2",
 #       remote_path: "nas.example.com:/volume1/media_2",
-#       local_mount_path: "{{ docker_mount_path }}_custom_path_2",
+#       local_mount_path: "{{ ruatomate_cifs_additional_creds }}_custom_path_2",
 #       type: nfs,
 #       nfs_opts: defaults,
 #     },
 #     {
 #       name: "Media NAS 3",
 #       remote_path: "//nas.example.com/media_3",
-#       local_mount_path: "{{ docker_mount_path }}_custom_path_3",
+#       local_mount_path: "{{ ruatomate_cifs_additional_creds }}_custom_path_3",
 #       type: cifs,
 #       cifs_username: "",
 #       cifs_password: "",

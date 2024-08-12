@@ -108,8 +108,8 @@ The default configuration for both NZBGet and Transmission is to mount their bas
     - `{{ docker_apps_path }}/transmission:/data/torrents`
     - `{{ docker_apps_path }}/nzbget:/data/usenet`
   - Remote NAS Mounting
-    - `{{ docker_mount_path }}/apps/transmission:/data/torrents`
-    - `{{ docker_mount_path }}/apps/nzbget:/data/usenet`
+    - `{{ ruatomate_cifs_additional_creds }}/apps/transmission:/data/torrents`
+    - `{{ ruatomate_cifs_additional_creds }}/apps/nzbget:/data/usenet`
 
 Below is an example file structure layout on a deployed server after full setup:
 ![Imgur](https://i.imgur.com/apIdIaG.png)
@@ -197,8 +197,8 @@ It is recommended to read and follow this guide entirely as there is a lot of co
 
 - Required settings for the `docker_media_share_type` of `nfs`:
 
-  - `nas_client_remote_nfs_path` : the path to the network share (e.g. `nas.example.com:/share`)
-  - `nas_client_nfs_opts` : the options for the network share (Google can help you find the correct options)
+  - `rautomate_nas_client_remote_nfs_path` : the path to the network share (e.g. `nas.example.com:/share`)
+  - `rautomate_nas_client_nfs_opts` : the options for the network share (Google can help you find the correct options)
 
 - Required settings for using Cloudflare DDNS:
 

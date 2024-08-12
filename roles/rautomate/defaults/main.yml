@@ -91,7 +91,7 @@ rautomate_docker_domain: home.local
 # These are used to generate Traefik allow-list rules for the proxy so only internal networks are permitted to access certain containers
 # Also controls how some containers treat local network traffic (e.g. Plex, transmission)
 rautomate_docker_subnet_mask: "24"
-rautomate_docker_network_subnet: "{{ ansible_default_ipv4.network }}/{{ docker_subnet_mask }}"
+rautomate_docker_network_subnet: "{{ ansible_default_ipv4.network }}/{{ rautomate_docker_subnet_mask }}"
 ### End of rautomate settings
 #######################################################################
 
@@ -224,7 +224,7 @@ rautomate_cloudflare_ddns_enabled: no
 
 # The domain that will be used for the Cloudflare DDNS container // default: "{{ docker_domain }}"
 # Automatically uses the same domain defined above
-rautomate_cloudflare_ddns_domain: "{{ docker_domain }}"
+rautomate_cloudflare_ddns_domain: "{{ rautomate_docker_domain }}"
 
 # The A (or AAAA) record to be created // default: "overseerr"
 # May cause issues if not set to "overseerr" due to the Traefik Host rules
@@ -265,7 +265,7 @@ rautomate_traefik_ssl_use_letsencrypt_staging_url: yes
 rautomate_traefik_ssl_dns_provider_code: ""
 
 # The DNS zone to use for SSL generation, this will use the domain defined above // default: "{{ docker_domain }}"
-rautomate_traefik_ssl_dns_provider_zone: "{{ docker_domain }}"
+rautomate_traefik_ssl_dns_provider_zone: "{{ rautomate_docker_domain }}"
 
 # The environment variables for your DNS provider found at the provider link above
 # This is an example if using Cloudflare

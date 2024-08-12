@@ -76,7 +76,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - {{ rautomate_docker_apps_path }}/traefik/config/traefik.yml:/etc/traefik/traefik.yml
       - {{ rautomate_docker_apps_path }}/traefik/config/certs/:/certs/
-{% if traefik_custom_rules %}
+{% if rautomate_traefik_custom_rules %}
       - {{ rautomate_docker_apps_path }}/traefik/config/customRules/:/customRules/
 {% endif %}
 {% if rautomate_docker_container_map['traefik']['traefik'] %}
@@ -397,7 +397,7 @@ services:
 {% for path in rautomate_nas_client_package_state %}
 {% for folder in rautomate_docker_library_folders %}
 {% if folder.type == "music" %}
-      - {{ path.local_mount_path }}/{{  rautomate_docker_library_folder_name }}/{{ folder.folder_name }}:/data/{{ path.name | map('regex_replace', regex, replace) | list | join }}/{{ folder.folder_name }}
+      - {{ path.local_mount_path }}/{{ rautomate_docker_library_folder_name }}/{{ folder.folder_name }}:/data/{{ path.name | map('regex_replace', regex, replace) | list | join }}/{{ folder.folder_name }}
 {% endif %}
 {% endfor %}
 {% endfor %}

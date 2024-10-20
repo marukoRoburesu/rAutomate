@@ -1,14 +1,16 @@
 ---
-- name: Ensure platform agnostic requirements.
-  ansible.builtin.package:
-    name:
-      - python3-pip
-    state: "{{ docker_platform_agnostic_requirements_state }}"
+- name: Ensure platform agnostic requirements are installed.
+  set_fact:
+    docker_platform_agnostic_requirements_state: present
+  when: ansible_distribution in ['Debian', 'Ubuntu']
 
-- name: Run RHEL-based Docker install.
-  ansible.builtin.import_tasks: redhat.yml
-  when: docker_family_override | lower == "redhat"
+- name: Ensure platform agnostic requirements are installed.
+  set_fact:
+    docker_platform_agnostic_requirements_state: latest
+  when: ansible_distribution in ['CentOS', 'Fedora', 'RedHat']
 
-- name: Run Debian-based Docker install.
-  ansible.builtin.import_tasks: debian.yml
-  when: ansible_facts["os_family"] | lower == "debian"
+- name: Install Docker with convenience script
+  ansible.builtin.script: "curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh"
+  args:
+    creates: /usr/bin/docker
+  register: docker_install

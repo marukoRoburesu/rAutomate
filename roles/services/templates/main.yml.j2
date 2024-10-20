@@ -1,0 +1,16 @@
+# {{ Service Name }} container, {{ Description }}
+  {{ item }}:
+    image: {{ item.image_name }}:{{ image_tag }}
+    container_name: {{ item.container_name }}
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+    networks:
+      - {{ network }}
+    volumes:
+      - {{ volume_host }}:{{ volume_container }}
+    labels:
+      - traefik.enable={{ traefik_enable }}
+      

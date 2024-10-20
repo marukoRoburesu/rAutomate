@@ -6,3 +6,4 @@ services_container_enable_auto_updates: {{ rautomate_container_enable_auto_updat
 services_container_auto_update_schedule: {{ rautomate_container_auto_update_schedule }}
 services_docker_apps_path: {{ rautomate_docker_apps_path }}
 services_project_name: {{ rautomate_project_name }}
+services_service_name: {{ rautomate_service_name }}

@@ -1,0 +1,42 @@
+---
+# DataMap/NAS configurations
+# Local
+filesystem_local:
+  - name: nas_local
+    mount_point: /
+    type: ext4
+    state: present
+    size: 1G
+    fstab: true
+    options: defaults
+    dump: 0
+    passno:
+    mount_on_boot: true
+
+# CIFS
+filesystem_nas_cifs:
+  - name: nas_cifs
+    mount_point: /mnt/nas
+    type: cifs
+    state: present
+    size:
+    fstab: true
+    options: credentials={{ rautomate_docker_data_path }}/.{{ rautomate_project_name }}.cifs_creds,vers=3.0
+    dump: 0
+    passno:
+    mount_on_boot: true
+    remote_path: //
+
+# NFS
+filesystem_nas_nfs:
+  - name: nas_nfs
+    mount_point: /mnt/nas
+    type: nfs
+    state: present
+    size:
+    fstab: true
+    options: defaults
+    dump: 0
+    passno:
+    mount_on_boot: true
+    remote_path: //

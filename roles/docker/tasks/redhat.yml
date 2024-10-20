@@ -48,7 +48,7 @@
     name: docker-ce-stable
     description: "Docker CE Stable - $basearch"
     baseurl: https://download.docker.com/linux/{{ distribution_override | lower }}/$releasever/$basearch/stable
-    enabled: yes
-    gpgcheck: yes
+    enabled: true
+    gpgcheck: true
     gpgkey: https://download.docker.com/linux/{{ distribution_override | lower }}/gpg
     state: "{{ docker_repo_state }}"

@@ -1,8 +1,8 @@
 ---
 - name: Initialize Automated Server Creation
   hosts: all
-  become: yes
-  gather_facts: yes
+  become: true
+  gather_facts: true
   vars:
     regex: '[^A-Za-z0-9._-]'
     replace: '_'
@@ -14,24 +14,24 @@
     - docker
 
   tasks:
-  - name: Ensure Nvidia GPU role if enabled
-    ansible.builtin.import_role:
-      name: gpu
-    when: rautomate_enable_nvidia_gpu is defined and rautomate_enable_nvidia_gpu
+    - name: Ensure Nvidia GPU role if enabled
+      ansible.builtin.import_role:
+        name: gpu
+      when: rautomate_enable_nvidia_gpu is defined and rautomate_enable_nvidia_gpu
 
-  - name: Ensure rautomate role
-    ansible.builtin.import_role:
-      name: rautomate
+    - name: Ensure rautomate role
+      ansible.builtin.import_role:
+        name: rautomate
 
-  - name: Verify all Traefik endpoints are accessible
-    ansible.builtin.uri:
-      url: http://{{ item.key }}.{{ rautomate_docker_domain }}
-      status_code: 200,302,401,403
-      validate_certs: no
-    with_dict:
-      - "{{ rautomate_docker_container_map }}"
-    when:
-      - item.value.traefik is defined and item.value.traefik
-      - item.value.enabled is defined and item.value.enabled
-      - rautomate_docker_container_map['traefik']['enabled'] is defined and rautomate_docker_container_map['traefik']['enabled']
-      - rautomate_traefik_verify_endpoints is defined and rautomate_traefik_verify_endpoints
+    - name: Verify all Traefik endpoints are accessible
+      ansible.builtin.uri:
+        url: http://{{ item.key }}.{{ rautomate_docker_domain }}
+        status_code: 200,302,401,403
+        validate_certs: false
+      with_dict:
+        - "{{ rautomate_docker_container_map }}"
+      when:
+        - item.value.traefik is defined and item.value.traefik
+        - item.value.enabled is defined and item.value.enabled
+        - rautomate_docker_container_map['traefik']['enabled'] is defined and rautomate_docker_container_map['traefik']['enabled']
+        - rautomate_traefik_verify_endpoints is defined and rautomate_traefik_verify_endpoints

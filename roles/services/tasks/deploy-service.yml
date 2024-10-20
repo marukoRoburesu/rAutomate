@@ -1,0 +1,8 @@
+---
+- name: Deploy Docker Compose
+  ansible.builtin.command:
+    cmd: docker-compose up -d
+    chdir: "{{ rautomate_docker_apps_path }}"
+    creates: "{{ rautomate_apps_path }}/apps/{{ item }}/docker-compose.yml"
+    changed_when: true
+    

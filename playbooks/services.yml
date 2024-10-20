@@ -1,0 +1,8 @@
+---
+- name: Service Config/Deploy
+  hosts: all
+  become: true
+  roles:
+    - services
+
+

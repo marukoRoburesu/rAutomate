@@ -5,15 +5,14 @@
 ### GPU settings
 # Requires supported hardware
 
-# Enables Nvidia GPU hardware accelleration within the Plex container // default: "no"
+# Enables Nvidia GPU hardware accelleration within the Plex container // default: "false"
 # Requires the Nvidia drivers to already be installed and working
-rautomate_enable_nvidia_gpu: no
+rautomate_enable_nvidia_gpu: false
 
-# Enables Intel GPU hardware accelleration within the Plex container // default: "no"
-rautomate_enable_intel_gpu: no
+# Enables Intel GPU hardware accelleration within the Plex container // default: "false"
+rautomate_enable_intel_gpu: false
 ### End of GPU settings
 #######################################################################
-
 
 
 #######################################################################
@@ -25,7 +24,6 @@ rautomate_plex_claim_token: ""
 rautomate_plex_advertise_ip: "{{ ansible_default_ipv4.address }}"
 ### End of Plex Settings
 #######################################################################
-
 
 
 #######################################################################
@@ -86,8 +84,8 @@ rautomate_docker_library_folders:
 rautomate_docker_domain: home.local
 
 # Most home networks are a "/24" network, so this is the default // default: "24"
-# If you don't know what this means, leave the next 2 lines alone
-# If you know your specific network mask, you can change that here
+# If you don't kfalsew what this means, leave the next 2 lines alone
+# If you kfalsew your specific network mask, you can change that here
 # These are used to generate Traefik allow-list rules for the proxy so only internal networks are permitted to access certain containers
 # Also controls how some containers treat local network traffic (e.g. Plex, transmission)
 rautomate_docker_subnet_mask: "24"
@@ -96,44 +94,42 @@ rautomate_docker_network_subnet: "{{ ansible_default_ipv4.network }}/{{ rautomat
 #######################################################################
 
 
-
 #######################################################################
 ### Container settings
 
 # Controls how the containers are restarted upon server or docker restart // default: "unless-stopped" // valid: "always", "unless-stopped", "on-failure"
 rautomate_container_restart_policy: unless-stopped
 
-# Enables the "watchtower" container to automatically download and apply container updates // default: "yes"
-rautomate_container_enable_auto_updates: yes
+# Enables the "watchtower" container to automatically download and apply container updates // default: "true"
+rautomate_container_enable_auto_updates: true
 
 # The cron-style schedule for the watchtower container to check for updates in UTC time // default: "0 0 1 * * *" or one day
 rautomate_container_auto_update_schedule: "0 0 1 * * *"
 
-# Will stop and remove containers that you disable within the container map (defined below) // default: "yes"
-rautomate_container_remove_orphans: yes
+# Will stop and remove containers that you disable within the container map (defined below) // default: "true"
+rautomate_container_remove_orphans: true
 
 # The timezone to use for the containers // default: "America/New_York"
 rautomate_container_timezone: America/Chicago
 
 # User and Group ID's to use for the running processes in the containers (may cause or be the cause of permissions issues)
-# default: "1000" // this usually matches OOB first user created in unix if using non ROOT user set these to the proper user:group IDs
+# default: "1000" // this usually matches OOB first user created in unix if using falsen ROOT user set these to the proper user:group IDs
 rautomate_container_uid: 1000
 rautomate_container_gid: 1000
 
-# This will download all of the containers before attempting to start them // default: "yes"
-rautomate_container_pull_images_first: yes
+# This will download all of the containers before attempting to start them // default: "true"
+rautomate_container_pull_images_first: true
 
-# This will expose each containers individual ports on the host (check the README for more info on which ports map to which containers) // default: "no"
+# This will expose each containers individual ports on the host (check the README for more info on which ports map to which containers) // default: "false"
 # If you disable traefik within the container map, the playbook will automatically override this setting and expose the ports
-rautomate_container_expose_ports: no
+rautomate_container_expose_ports: false
 ### End of Container settings
 #######################################################################
 
 
-
 #######################################################################
 ### NAS settings
-## Only used if the `docker_media_share_type` is not set to `local`
+## Only used if the `docker_media_share_type` is falset set to `local`
 ## NAS client general settings
 # Controls the "install state" of the required package // default: "present" // valid: "present", "latest", "absent"
 rautomate_nas_client_package_state: present
@@ -141,8 +137,8 @@ rautomate_nas_client_package_state: present
 # Controls the "mount state" of the remote share // default: "mounted" // valid: present, absent, mounted, unmounted, remounted
 rautomate_nas_client_mount_state: mounted
 
-# Controls if the mount will be enabled on boot // default: "yes"
-rautomate_nas_client_mount_on_boot: yes
+# Controls if the mount will be enabled on boot // default: "true"
+rautomate_nas_client_mount_on_boot: true
 
 ## NAS client CIFS settings, only if `docker_media_share_type` is set to `cifs`
 # The CIFS/SMB remote share path to connect to // default: "//nas.example.com/share"
@@ -165,7 +161,7 @@ rautomate_rautomate_nas_client_remote_nfs_path: "nas.example.com:/share"
 rautomate_rautomate_nas_client_nfs_opts: defaults
 
 # If you have more than one remote share path to use, you can enable this setting and define them below, please be sure to read the required values for each share type (CIFS, NFS, local)
-rautomate_nas_client_use_additional_paths: no
+rautomate_nas_client_use_additional_paths: false
 
 ### Follow the example template after these required values
 # Required values for `local` folder type:
@@ -214,20 +210,19 @@ rautomate_nas_client_use_additional_paths: no
 #######################################################################
 
 
-
 #######################################################################
 ### Cloudflare DDNS settings
 # Your Cloudflare API token that has read/write permissions for your DNS zone [Fill this if you wish to use SSL regardless of DDNS]
 rautomate_cloudflare_api_token: ""
-# Enables or disables the Cloudflare DDNS container // default: "no"
-rautomate_cloudflare_ddns_enabled: no
+# Enables or disables the Cloudflare DDNS container // default: "false"
+rautomate_cloudflare_ddns_enabled: false
 
 # The domain that will be used for the Cloudflare DDNS container // default: "{{ docker_domain }}"
 # Automatically uses the same domain defined above
 rautomate_cloudflare_ddns_domain: "{{ rautomate_docker_domain }}"
 
 # The A (or AAAA) record to be created // default: "overseerr"
-# May cause issues if not set to "overseerr" due to the Traefik Host rules
+# May cause issues if falset set to "overseerr" due to the Traefik Host rules
 rautomate_cloudflare_ddns_subdomain: overseerr
 
 # Whether to proxy the above record through Cloudflare // default: "true"
@@ -236,30 +231,29 @@ rautomate_cloudflare_ddns_proxied: "true"
 # Deletes the record when the container is stopped // default: "true"
 rautomate_cloudflare_ddns_delete_record_on_stop: "true"
 
-# Creates an AAAA record for IPv6 // default: "no"
-rautomate_cloudflare_ddns_create_ipv6_aaaa_record: no
+# Creates an AAAA record for IPv6 // default: "false"
+rautomate_cloudflare_ddns_create_ipv6_aaaa_record: false
 ### End of Cloudflare DDNS settings
 #######################################################################
 
 
-
 #######################################################################
 ### SSL and Traefik settings
-# Enables or Disables SSL wildcard certificate generation // default: "no"
-rautomate_traefik_ssl_enabled: no
+# Enables or Disables SSL wildcard certificate generation // default: "false"
+rautomate_traefik_ssl_enabled: false
 
-# Enables or disables Traefik access logging // default: "no"
-rautomate_traefik_access_log: no
+# Enables or disables Traefik access logging // default: "false"
+rautomate_traefik_access_log: false
 
 # Allow insecure connections to Traefik
-rautomate_traefik_insecure: no
+rautomate_traefik_insecure: false
 
-# Creates a custom rules directory to allow for more modular changes. // default: "no"
-rautomate_traefik_custom_rules: no
+# Creates a custom rules directory to allow for more modular changes. // default: "false"
+rautomate_traefik_custom_rules: false
 
-# Whether to use the staging/testing URL or production URL // default: "yes"
-# If SSL is enabled and this is set to yes, check to make sure the generated certificate is issued from the "STAGING" certificate authority before changing this to "no"
-rautomate_traefik_ssl_use_letsencrypt_staging_url: yes
+# Whether to use the staging/testing URL or production URL // default: "true"
+# If SSL is enabled and this is set to true, check to make sure the generated certificate is issued from the "STAGING" certificate authority before changing this to "false"
+rautomate_traefik_ssl_use_letsencrypt_staging_url: true
 
 # The DNS provider to use for SSL generation, check this for supported providers: https://doc.traefik.io/traefik/https/acme/#providers
 rautomate_traefik_ssl_dns_provider_code: ""
@@ -282,18 +276,17 @@ rautomate_traefik_ssl_dns_resolver_2: "1.0.0.1"
 # Required for Let's Encrypt, the email address to use when generating your SSL certificate
 rautomate_traefik_ssl_letsencrypt_email: ""
 
-# Enable or disable to check if all possible Traefik routes are available (requires all FQDN DNS records to be valid) // default: "no"
-rautomate_traefik_verify_endpoints: no
+# Enable or disable to check if all possible Traefik routes are available (requires all FQDN DNS records to be valid) // default: "false"
+rautomate_traefik_verify_endpoints: false
 
 # The Traefik allow-list for all containers EXCEPT the Overseerr container, the Overseerr container allows ALL IP's by default
 # This allows all RFC1918 addresses by default, you can change this to further restrict or allow greater access
 rautomate_traefik_subnet_allow_list: "{{ rautomate_docker_network_subnet }}, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16"
 
-# The Traefik Pilot token (do not fill before running once with it blank on first run)
+# The Traefik Pilot token (do falset fill before running once with it blank on first run)
 rautomate_traefik_pilot_token: ""
 ### End of SSL and Traefik settings
 #######################################################################
-
 
 
 #######################################################################
@@ -312,9 +305,10 @@ rautomate_transmission_ratio_enabled: "true" # default: "true"
 rautomate_transmission_dns_1: "8.8.8.8"
 rautomate_transmission_dns_2: "8.8.4.4"
 
-# This will cause Transmission to download the files to your NAS instead of a local folder (useful if you download a lot at once and your server doesn't have a lot of space)
+# This will cause Transmission to download the files to your NAS instead of a local folder
+# (useful if you download a lot at once and your server doesn't have a lot of space)
 # If enabled, a new "apps" folder will be created within your library folder
-rautomate_transmission_use_nas_for_downloads: no
+rautomate_transmission_use_nas_for_downloads: false
 
 # Additional environment variables for Transmission (can be found at link above)
 rautomate_transmission_additional_env_vars:
@@ -326,7 +320,6 @@ rautomate_transmission_additional_env_vars:
   }
 ### End of VPN and Transmission settings
 #######################################################################
-
 
 
 #######################################################################
@@ -341,53 +334,53 @@ rautomate_docker_compose_container_state: present
 #  `traefik`: Enables or disables accessing the container via Traefik
 rautomate_docker_container_map:
   traefik:
-    enabled: yes
-    directory: yes
-    traefik: yes
+    enabled: true
+    directory: true
+    traefik: true
   sonarr:
-    enabled: yes
-    directory: yes
-    traefik: yes
+    enabled: true
+    directory: true
+    traefik: true
   radarr:
-    enabled: yes
-    directory: yes
-    traefik: yes
+    enabled: true
+    directory: true
+    traefik: true
   bazarr:
-    enabled: yes
-    directory: yes
-    traefik: yes
+    enabled: true
+    directory: true
+    traefik: true
   transmission:
-    enabled: no
-    directory: yes
-    traefik: no
+    enabled: false
+    directory: true
+    traefik: false
   portainer:
-    enabled: yes
-    directory: yes
-    traefik: yes
+    enabled: true
+    directory: true
+    traefik: true
   overseerr:
-    enabled: yes
-    directory: yes
-    traefik: yes
+    enabled: true
+    directory: true
+    traefik: true
   prowlarr:
-    enabled: yes
-    directory: yes
-    traefik: yes
+    enabled: true
+    directory: true
+    traefik: true
   plex:
-    enabled: yes
-    directory: yes
-    traefik: yes
+    enabled: true
+    directory: true
+    traefik: true
   tautulli:
-    enabled: yes
-    directory: yes
-    traefik: yes
+    enabled: true
+    directory: true
+    traefik: true
   lidarr:
-    enabled: yes
-    directory: yes
-    traefik: yes
+    enabled: true
+    directory: true
+    traefik: true
   nzbget:
-    enabled: yes
-    directory: yes
-    traefik: yes
+    enabled: true
+    directory: true
+    traefik: true
 
 
 rautomate_plex_transcode_folder: "/opt/transcode" # default: "/opt/transcode" Best to match this to a mounted SSD filesystem for fast reads and writes.
@@ -396,12 +389,11 @@ rautomate_plex_transcode_folder: "/opt/transcode" # default: "/opt/transcode" Be
 #######################################################################
 
 
-
 #######################################################################
 ### Advanced Ansible settings
 # Overrides the family to 'redhat' if running Alma Linux
 rautomate_family_override: "{{ 'redhat' if ansible_os_family | lower == 'almalinux' else ansible_os_family | lower }}"
 
-# Which python interpreter to use, only change if you're an advanced user and know what you're doing
+# Which python interpreter to use, only change if you're an advanced user and kfalsew what you're doing
 ansible_python_interpreter: /usr/bin/python3
 #######################################################################

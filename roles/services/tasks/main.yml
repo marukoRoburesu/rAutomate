@@ -1,0 +1,12 @@
+---
+name: Import services tasks
+hosts: all
+become: true
+vars:
+    regex: '[^A-Za-z0-9._-]'
+    replace: '_'
+vars_files:
+    - vars/default.yml
+tasks:
+    - ansible.builtin.import_tasks: generate-compose.yml
+    - ansible.builtin.import_tasks: deploy-service.yml

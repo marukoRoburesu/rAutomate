@@ -1,0 +1,6 @@
+---
+- name: Generate Docker Compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ rautomate_docker_apps_path }}/docker-compose.yml"
+    mode: "0644"

@@ -1,0 +1,14 @@
+---
+- name: Ensure platform agnostic requirements.
+  ansible.builtin.package:
+    name:
+      - python3-pip
+    state: "{{ docker_platform_agnostic_requirements_state }}"
+
+- name: Run RHEL-based Docker install.
+  ansible.builtin.import_tasks: redhat.yml
+  when: docker_family_override | lower == "redhat"
+
+- name: Run Debian-based Docker install.
+  ansible.builtin.import_tasks: debian.yml
+  when: ansible_facts["os_family"] | lower == "debian"

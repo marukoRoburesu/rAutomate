@@ -23,7 +23,7 @@
   when:
     - rautomate_nas_client_package_state is defined
     - rautomate_nas_client_use_additional_paths is defined and rautomate_nas_client_use_additional_paths
-  no_log: yes
+  no_log: true
 
 - name: Ensure library folders.
   ansible.builtin.file:
@@ -50,7 +50,7 @@
     dest: "{{ rautomate_docker_data_path }}/docker-compose.yml"
     group: docker
     mode: "0775"
-    backup: yes
+    backup: true
 
 - name: Ensure containers defined in compose file.
   community.docker.docker_compose:

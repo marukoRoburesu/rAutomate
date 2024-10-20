@@ -1,7 +1,7 @@
 ---
 - name: Wait for VPN init
   ansible.builtin.command: sleep 15
-  changed_when: False
+  changed_when: false
 
 - name: Get public IP from Transmission VPN container.
   ansible.builtin.command: docker exec transmission curl -s icanhazip.com
@@ -30,4 +30,3 @@
           - "Current public IP: {{ ansible_facts['ipify_public_ip'] }}"
           - "Current VPN IP: {{ vpn_public_ip.stdout }}"
           - The Transmission container has been stopped
-  

@@ -1,0 +1,11 @@
+---
+- name: Initialize Automated Server Creation
+  hosts: all
+  become: true
+  gather_facts: true
+  vars_files:
+    - vars/default.yml
+  roles:
+    - docker
+    - nfs
+    - gpu

@@ -7,7 +7,8 @@
 
 - name: Ensure nvidia-container-runtime repo
   ansible.builtin.get_url:
-    url: https://nvidia.github.io/nvidia-container-runtime/{{ ansible_facts['lsb']['id'] | lower }}{{ ansible_facts['lsb']['release'] }}/nvidia-container-runtime.list
+    url: |
+      https://nvidia.github.io/nvidia-container-runtime/{{ ansible_facts['lsb']['id'] | lower }}{{ ansible_facts['lsb']['release'] }}/nvidia-container-runtime.list
     dest: /etc/apt/sources.list.d/nvidia-container-runtime.list
     force: true
     mode: '0644'

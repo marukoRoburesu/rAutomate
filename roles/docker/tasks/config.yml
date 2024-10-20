@@ -1,0 +1,50 @@
+---
+- name: Ensure Docker daemon config
+  ansible.builtin.template:
+    src: ../files/docker-daemon.json
+    dest: /etc/docker/daemon.json
+    mode: '0644'
+    notify: Restart docker
+    when: docker_enable_live_restore
+
+- name: Ensure docker-compose.
+  ansible.builtin.get_url:
+    url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_machine }}
+    dest: /usr/local/bin/docker-compose
+    owner: root
+    group: docker
+    mode: '0755'
+
+- name: Ensure docker-compose symlink.
+  ansible.builtin.file:
+    src: /usr/local/bin/docker-compose
+    dest: /usr/bin/docker-compose
+    owner: root
+    group: docker
+    state: link
+  when: not ansible_check_mode
+
+- name: Ensure pip Docker packages.
+  ansible.builtin.pip:
+    name:
+      - docker
+      - docker-compose
+    state: "{{ docker_pip_package_state }}"
+
+- name: Ensure Docker service.
+  ansible.builtin.service:
+    name: docker
+    state: "{{ docker_service_state }}"
+    enabled: "{{ docker_service_enabled }}"
+  when: not ansible_check_mode
+
+- name: Ensure docker users are in the docker group.
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups:
+      - docker
+    append: true
+  with_items: "{{ docker_users }}"
+  when:
+    - docker_users is defined
+    - not ansible_check_mode

@@ -1,12 +1,33 @@
 ---
-docker_platform_agnostic_requirements_state: present # default: present // valid: present, absent
-docker_prereq_packages_state: present # default: present // valid: present, absent
-docker_package_state: present # default: present
-docker_service_state: started # default: started
-docker_service_enabled: true # default: true
-docker_compose_version: "v2.14.2" # default: '1.29.2'
-docker_repo_state: present # default: present
-docker_enable_live_restore: false # default: false
-docker_pip_package_state: present # default: present
+# State of platform-agnostic requirements (present/absent)
+docker_platform_agnostic_requirements_state: present
+
+# State of prerequisite packages (present/absent)
+docker_prereq_packages_state: present
+
+# State of Docker package (present/absent)
+docker_package_state: present
+
+# State of Docker service (started/stopped)
+docker_service_state: started
+
+# Whether Docker service should be enabled at boot (true/false)
+docker_service_enabled: true
+
+# Version of Docker Compose to install
+docker_compose_version: 'v2.14.2'
+
+# State of Docker repository (present/absent)
+docker_repo_state: present
+
+# Enable Docker live restore (true/false)
+docker_enable_live_restore: false
+
+# State of Docker pip package (present/absent)
+docker_pip_package_state: present
+
+# Override distribution for Docker installation
 docker_distribution_override: "{{ 'centos' if ansible_distribution | lower == 'almalinux' else ansible_distribution | lower }}"
+
+# Override OS family for Docker installation
 docker_family_override: "{{ 'redhat' if ansible_os_family | lower == 'almalinux' else ansible_os_family | lower }}"
